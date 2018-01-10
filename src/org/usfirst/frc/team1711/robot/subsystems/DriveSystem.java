@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
 /**
  *
@@ -19,6 +20,7 @@ public class DriveSystem extends Subsystem
 	WPI_TalonSRX rearRightDrive;
 	
 	DifferentialDrive basicDrive;
+	MecanumDrive mecanumDrive;
 	
 	SpeedControllerGroup left;
 	SpeedControllerGroup right;
@@ -34,17 +36,17 @@ public class DriveSystem extends Subsystem
     	right = new SpeedControllerGroup(frontRightDrive, rearRightDrive);
     	
     	basicDrive = new DifferentialDrive(left, right);
+    	mecanumDrive = new MecanumDrive(frontLeftDrive, rearLeftDrive, frontRightDrive, rearRightDrive);
     }
     
-    public void arcadeDrive()
+    public void arcadeDriving()
     {
     	basicDrive.arcadeDrive(RobotMap.driveStick.getRawAxis(RobotMap.throttleAxis), RobotMap.driveStick.getRawAxis(RobotMap.rotationAxis));
     }
     
-    public void mecanumDrive()
+    public void mecanumDriving(double magnitude, double angle, double rotation)
     {
-    	//add code here
-    	//possibly ref the j.smith libs
+    	mecanumDrive.drivePolar(magnitude, angle, rotation);
     }
 
     public void initDefaultCommand() 
