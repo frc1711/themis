@@ -18,6 +18,7 @@ public class RobotMap
 	//placeholder numbers
 	public static int throttleAxis = 0;
 	public static int rotationAxis = 1;
+	public static int holoRotationAxis = 2; 
 	
 	public static Joystick driveStick;
 	

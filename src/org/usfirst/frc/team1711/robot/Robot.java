@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot
 		robotMap = new RobotMap();
 		robotMap.init();
 		oi = new OI();
-		driveSystem = new DriveSystem();
+		driveSystem = new DriveSystem(DriveSystem.DriveType.MECANUM);
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 	}
@@ -114,6 +114,7 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopPeriodic() 
 	{
+		System.out.println("Gyro: " + Robot.driveSystem.gyro.getAngle());
 		Scheduler.getInstance().run();
 	}
 
