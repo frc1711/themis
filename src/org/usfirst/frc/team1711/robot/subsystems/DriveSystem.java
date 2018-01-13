@@ -2,6 +2,7 @@ package org.usfirst.frc.team1711.robot.subsystems;
 
 import org.usfirst.frc.team1711.robot.RobotMap;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -64,10 +65,10 @@ public class DriveSystem extends Subsystem
     
     public void stopRobot()
     {
-    	frontLeftDrive.set(0);
-    	frontRightDrive.set(0);
-    	rearLeftDrive.set(0);
-    	rearRightDrive.set(0);
+//    	frontLeftDrive.set(0);
+//    	frontRightDrive.set(0);
+//    	rearLeftDrive.set(0);
+//    	rearRightDrive.set(0); 
     }
 
     public void initDefaultCommand() 
