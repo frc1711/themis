@@ -31,7 +31,7 @@ public class RawJoystickDrive extends Command
     	switch(type)
     	{
 	    	case MECANUM:
-	    		Robot.driveSystem.mecanumDriving(RobotMap.driveStick.getMagnitude(), RobotMap.driveStick.getDirectionRadians(), RobotMap.driveStick.getRawAxis(RobotMap.holoRotationAxis));
+	    		Robot.driveSystem.mecanumDriving(RobotMap.driveStick.getMagnitude(), RobotMap.driveStick.getDirectionRadians(), RobotMap.driveStick.getRawAxis(RobotMap.throttleAxis));
 	    	case DIFFERENTIAL:
 	    		Robot.driveSystem.arcadeDriving();
     	}

@@ -65,10 +65,10 @@ public class DriveSystem extends Subsystem
     
     public void stopRobot()
     {
-//    	frontLeftDrive.set(0);
-//    	frontRightDrive.set(0);
-//    	rearLeftDrive.set(0);
-//    	rearRightDrive.set(0); 
+    	frontLeftDrive.set(0);
+    	frontRightDrive.set(0);
+    	rearLeftDrive.set(0);
+    	rearRightDrive.set(0); 
     }
 
     public void initDefaultCommand() 

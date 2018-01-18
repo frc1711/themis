@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team1711.robot;
 
+import org.usfirst.frc.team1711.robot.commands.RawJoystickDrive;
 import org.usfirst.frc.team1711.robot.subsystems.DriveSystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -26,6 +27,7 @@ public class Robot extends IterativeRobot
 	public static DriveSystem driveSystem;
 
 	Command autonomousCommand;
+	Command teleopDrive;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
@@ -39,6 +41,7 @@ public class Robot extends IterativeRobot
 		robotMap.init();
 		oi = new OI();
 		driveSystem = new DriveSystem(DriveSystem.DriveType.MECANUM);
+		teleopDrive = new RawJoystickDrive();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 	}
@@ -106,6 +109,7 @@ public class Robot extends IterativeRobot
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		teleopDrive.start();
 	}
 
 	/**
