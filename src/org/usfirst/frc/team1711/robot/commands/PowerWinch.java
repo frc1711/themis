@@ -37,8 +37,17 @@ public class PowerWinch extends Command
     	
     	else
     	{
-    		Robot.lift.runLift(RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis));
     		lockActive = false;
+    		
+    		if((RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis) > 0.1) && !Robot.lift.getTopLimitSwitch())
+    		{
+    			Robot.lift.runLift(RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis));
+    		}
+    		
+    		else if((RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis) < -0.1) && !Robot.lift.getBottomLimitSwitch())
+    		{
+    			Robot.lift.runLift(RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis));
+    		}
     	}
     }
 

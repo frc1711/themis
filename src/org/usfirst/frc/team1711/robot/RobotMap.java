@@ -24,6 +24,11 @@ public class RobotMap
 	public static int rotationAxis = 0;
 	public static int holoRotationAxis = 2; 
 	
+	//sensors
+	//digital ports
+	public static int topLiftSwitch = 0;
+	public static int bottomLiftSwitch = 1;
+	
 	public static Joystick driveStick;
 	public static Joystick auxStick;
 	
