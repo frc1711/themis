@@ -78,6 +78,33 @@ public class DriveSystem extends Subsystem
     	rearRightDrive.set(0); 
     }
     
+    public void turn(int angle, double speed)
+    {
+    	//need to know pos/neg right/left
+    	if(angle > 0)
+    		turnRight(speed);
+    	else if(angle < 0)
+    		turnLeft(speed);
+    	else
+    		stopRobot();
+    }
+    
+    private void turnRight(double speed)
+    {
+    	frontLeftDrive.set(speed);
+    	frontRightDrive.set(speed);
+    	rearLeftDrive.set(-speed);
+    	rearRightDrive.set(-speed); 
+    }
+    
+    public void turnLeft(double speed)
+    {
+    	frontLeftDrive.set(-speed);
+    	frontRightDrive.set(-speed);
+    	rearLeftDrive.set(speed);
+    	rearRightDrive.set(speed); 
+    }
+    
     public void zeroGyro()
     {
     	gyro.reset();
