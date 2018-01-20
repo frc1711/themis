@@ -10,10 +10,14 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class RobotMap 
 {
+	//MOTORS
+	//drive motors
 	public static int FRD = 3;
 	public static int FLD = 1;
 	public static int RRD = 2;
 	public static int RLD = 0;
+	//other motors
+	public static int liftMotor = 4;
 	
 	//placeholder numbers
 	public static int throttleAxis = 1;

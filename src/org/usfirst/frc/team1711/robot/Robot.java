@@ -3,6 +3,7 @@ package org.usfirst.frc.team1711.robot;
 
 import org.usfirst.frc.team1711.robot.commands.RawJoystickDrive;
 import org.usfirst.frc.team1711.robot.subsystems.DriveSystem;
+import org.usfirst.frc.team1711.robot.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -25,6 +26,7 @@ public class Robot extends IterativeRobot
 	public static RobotMap robotMap;
 	public static OI oi;
 	public static DriveSystem driveSystem;
+	public static Lift lift;
 
 	Command autonomousCommand;
 	Command teleopDrive;
@@ -41,6 +43,7 @@ public class Robot extends IterativeRobot
 		robotMap.init();
 		oi = new OI();
 		driveSystem = new DriveSystem(DriveSystem.DriveType.MECANUM);
+		lift = new Lift();
 		teleopDrive = new RawJoystickDrive();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
