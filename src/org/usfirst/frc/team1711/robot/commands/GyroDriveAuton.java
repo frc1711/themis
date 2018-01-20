@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SingleModeWinch extends Command {
+public class GyroDriveAuton extends Command {
 
-    public SingleModeWinch() 
+    public GyroDriveAuton() 
     {
-        requires(Robot.lift);
+        requires(Robot.driveSystem);
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +22,6 @@ public class SingleModeWinch extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	Robot.lift.runLift(0.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -34,13 +33,11 @@ public class SingleModeWinch extends Command {
     // Called once after isFinished returns true
     protected void end() 
     {
-    	Robot.lift.runLift(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() 
     {
-    	Robot.lift.runLift(0);
     }
 }
