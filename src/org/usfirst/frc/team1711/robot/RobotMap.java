@@ -25,9 +25,11 @@ public class RobotMap
 	public static int holoRotationAxis = 2; 
 	
 	public static Joystick driveStick;
+	public static Joystick auxStick;
 	
 	public void init()
 	{
 		driveStick = new Joystick(0);
+		auxStick = new Joystick(1);
 	}
 }

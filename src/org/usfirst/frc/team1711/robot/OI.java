@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1711.robot;
 
+import org.usfirst.frc.team1711.robot.commands.BrakeWinch;
 import org.usfirst.frc.team1711.robot.commands.SingleModeWinch;
 
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -41,9 +42,11 @@ public class OI
 	// button.whenReleased(new ExampleCommand());
 	JoystickButton orthoButton = new JoystickButton(RobotMap.driveStick, 1);
 	JoystickButton winchButton = new JoystickButton(RobotMap.driveStick, 2);
+	JoystickButton winchBrakeButton = new JoystickButton(RobotMap.manipulatorStick, 1);
 	
 	public OI()
 	{
 		winchButton.whileHeld(new SingleModeWinch());
+		winchBrakeButton.whenPressed(new BrakeWinch());
 	}
 }
