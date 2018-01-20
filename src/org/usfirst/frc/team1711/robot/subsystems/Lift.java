@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1711.robot.subsystems;
 
 import org.usfirst.frc.team1711.robot.RobotMap;
+import org.usfirst.frc.team1711.robot.commands.PowerWinch;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -56,7 +57,7 @@ public class Lift extends Subsystem
 
     public void initDefaultCommand() 
     {
-        
+        new PowerWinch();
     }
 }
 
