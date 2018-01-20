@@ -28,14 +28,20 @@ public class RawJoystickDrive extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	switch(type)
+    	if((Math.abs(RobotMap.driveStick.getRawAxis(1)) > 0.08) || (Math.abs(RobotMap.driveStick.getRawAxis(0)) > 0.08))
     	{
-	    	case MECANUM:
-	    		Robot.driveSystem.mecanumDriving(RobotMap.driveStick.getMagnitude(), RobotMap.driveStick.getDirectionRadians(), RobotMap.driveStick.getRawAxis(RobotMap.throttleAxis));
-	    	case DIFFERENTIAL:
-	    		Robot.driveSystem.arcadeDriving();
+    		switch(type)
+        	{
+    	    	case MECANUM:
+    	    		Robot.driveSystem.mecanumDriving(RobotMap.driveStick.getRawAxis(RobotMap.throttleAxis),
+    	    				RobotMap.driveStick.getDirectionRadians(),
+    	    				RobotMap.driveStick.getRawAxis(0));
+    	    	case DIFFERENTIAL:
+    	    		Robot.driveSystem.arcadeDriving();
+        	}
     	}
     }
+    	
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() 

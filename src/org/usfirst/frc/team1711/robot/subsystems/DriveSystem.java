@@ -42,6 +42,8 @@ public class DriveSystem extends Subsystem
     	rearLeftDrive = new WPI_TalonSRX(RobotMap.RRD);
     	rearRightDrive = new WPI_TalonSRX(RobotMap.FRD);
     	
+    	frontLeftDrive.setInverted(true);
+    	
     	left = new SpeedControllerGroup(frontLeftDrive, rearLeftDrive);
     	right = new SpeedControllerGroup(frontRightDrive, rearRightDrive);
     	
@@ -63,12 +65,22 @@ public class DriveSystem extends Subsystem
     	mecanumDrive.drivePolar(magnitude, angle, rotation);
     }
     
+    public void orthoDriving(double direction)
+    {
+    	mecanumDrive.driveCartesian(RobotMap.driveStick.getRawAxis(RobotMap.rotationAxis),0, 0);
+    }
+    
     public void stopRobot()
     {
     	frontLeftDrive.set(0);
     	frontRightDrive.set(0);
     	rearLeftDrive.set(0);
     	rearRightDrive.set(0); 
+    }
+    
+    public void zeroGyro()
+    {
+    	gyro.reset();
     }
 
     public void initDefaultCommand() 
