@@ -74,7 +74,7 @@ public class Lift extends Subsystem
 
     public void initDefaultCommand() 
     {
-        new PowerWinch();
+        setDefaultCommand(new PowerWinch());
     }
 }
 
