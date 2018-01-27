@@ -23,7 +23,7 @@ public class OrthoLockDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	Robot.driveSystem.orthoDriving(RobotMap.driveStick.getRawAxis(RobotMap.rotationAxis));
+    	Robot.driveSystem.orthoDriving(-1 * RobotMap.driveStick.getRawAxis(RobotMap.rotationAxis));
     }
 
     // Make this return true when this Command no longer needs to run execute()

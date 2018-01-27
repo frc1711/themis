@@ -16,17 +16,21 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Lift extends Subsystem 
 {
     TalonSRX liftTalon;
+    TalonSRX brakeTalon;
     
     DigitalInput topLimitSwitch;
     DigitalInput bottomLimitSwitch;
+    public DigitalInput brakeSwitch;
     
     public Lift()
     {
     	liftTalon = new TalonSRX(RobotMap.liftMotor);
     	liftTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
     	
+    	brakeTalon = new TalonSRX(RobotMap.brakeMotor);
     	topLimitSwitch = new DigitalInput(RobotMap.topLiftSwitch);
     	bottomLimitSwitch = new DigitalInput(RobotMap.bottomLiftSwitch);
+    	brakeSwitch = new DigitalInput(RobotMap.brakeSwitch);
     }
     
     public void runLift(double speed)
@@ -43,6 +47,11 @@ public class Lift extends Subsystem
     public int getLiftPosition()
     {
     	return liftTalon.getSelectedSensorPosition(0);
+    }
+    
+    public void brake()
+    {
+    	brakeTalon.set(ControlMode.PercentOutput, 0.5);
     }
     
     public boolean getTopLimitSwitch()

@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team1711.robot;
 
+import org.usfirst.frc.team1711.robot.commands.GyroDriveAuton;
 import org.usfirst.frc.team1711.robot.commands.RawJoystickDrive;
 import org.usfirst.frc.team1711.robot.subsystems.DriveSystem;
 import org.usfirst.frc.team1711.robot.subsystems.Lift;
@@ -41,10 +42,10 @@ public class Robot extends IterativeRobot
 	{
 		robotMap = new RobotMap();
 		robotMap.init();
-		oi = new OI();
-		driveSystem = new DriveSystem(DriveSystem.DriveType.MECANUM);
+		//driveSystem = new DriveSystem(DriveSystem.DriveType.MECANUM);
 		lift = new Lift();
-		teleopDrive = new RawJoystickDrive();
+		//teleopDrive = new RawJoystickDrive();
+		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 	}
@@ -80,7 +81,9 @@ public class Robot extends IterativeRobot
 	@Override
 	public void autonomousInit() 
 	{
-		autonomousCommand = chooser.getSelected();
+		//autonomousCommand = chooser.getSelected();
+		
+//		autonomousCommand = new GyroDriveAuton(90);
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -112,7 +115,7 @@ public class Robot extends IterativeRobot
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		teleopDrive.start();
+//		teleopDrive.start();
 	}
 
 	/**
@@ -121,7 +124,10 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopPeriodic() 
 	{
-		System.out.println("Gyro: " + Robot.driveSystem.gyro.getAngle());
+		//System.out.println("Gyro: " + Robot.driveSystem.gyro.getAngle());
+		System.out.println("Brake: " + Robot.lift.brakeSwitch.get());
+		System.out.println("Bottom: " + Robot.lift.getBottomLimitSwitch());
+		System.out.println("Top: " + Robot.lift.getTopLimitSwitch());
 		Scheduler.getInstance().run();
 	}
 

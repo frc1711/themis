@@ -18,6 +18,7 @@ public class RobotMap
 	public static int RLD = 0;
 	//other motors
 	public static int liftMotor = 4;
+	public static int brakeMotor = 5;
 	
 	//placeholder numbers
 	public static int throttleAxis = 1;
@@ -28,6 +29,7 @@ public class RobotMap
 	//digital ports
 	public static int topLiftSwitch = 0;
 	public static int bottomLiftSwitch = 1;
+	public static int brakeSwitch = 2;
 	
 	public static Joystick driveStick;
 	public static Joystick auxStick;
