@@ -55,7 +55,7 @@ public class PowerWinch extends Command
     		Robot.lift.runLift(0); 
 		else
 		{
-			if(Math.abs(RobotMap.auxStick.getRawAxis(1)) > 0.08)
+			if(Math.abs(RobotMap.auxStick.getRawAxis(1)) > 0.1)
 	    		Robot.lift.runLift(RobotMap.auxStick.getRawAxis(1));
 	    	else
 	    		Robot.lift.runLift(0);

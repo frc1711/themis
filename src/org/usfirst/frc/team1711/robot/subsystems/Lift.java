@@ -57,6 +57,11 @@ public class Lift extends Subsystem
     	brakeTalon.set(ControlMode.PercentOutput, 0.5);
     }
     
+    public void stopBrake()
+    {
+    	brakeTalon.set(ControlMode.PercentOutput, 0);
+    }
+    
     public boolean getTopLimitSwitch()
     {
     	return topLimitSwitch.get();
