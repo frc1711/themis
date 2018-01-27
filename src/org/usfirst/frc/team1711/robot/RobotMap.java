@@ -17,8 +17,9 @@ public class RobotMap
 	public static int RRD = 2;
 	public static int RLD = 0;
 	//other motors
-	public static int liftMotor = 4;
-	public static int brakeMotor = 5;
+	public static int liftMotor = 0;
+	public static int otherLiftMotor = 1;
+	public static int brakeMotor = 2;
 	
 	//placeholder numbers
 	public static int throttleAxis = 1;

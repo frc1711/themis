@@ -28,7 +28,7 @@ public class PowerWinch extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	if(lockMode && Math.abs(RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis)) < 0.1)
+/*    	if(lockMode && Math.abs(RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis)) < 0.1)
     	{
     		setPoint = Robot.lift.getLiftPosition();
     		Robot.lift.setPositionMode(setPoint);
@@ -48,13 +48,24 @@ public class PowerWinch extends Command
     		{
     			Robot.lift.runLift(RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis));
     		}
-    	}
+    	} */
+    	if(!Robot.lift.getTopLimitSwitch() && RobotMap.auxStick.getRawAxis(1) < 0)
+			Robot.lift.runLift(0);
+		else if(!Robot.lift.getBottomLimitSwitch() && RobotMap.auxStick.getRawAxis(1) > 0)
+    		Robot.lift.runLift(0); 
+		else
+		{
+			if(Math.abs(RobotMap.auxStick.getRawAxis(1)) > 0.08)
+	    		Robot.lift.runLift(RobotMap.auxStick.getRawAxis(1));
+	    	else
+	    		Robot.lift.runLift(0);
+		}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() 
     {
-        return false;
+        return false; 
     }
 
     // Called once after isFinished returns true

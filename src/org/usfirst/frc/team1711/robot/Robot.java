@@ -2,6 +2,7 @@
 package org.usfirst.frc.team1711.robot;
 
 import org.usfirst.frc.team1711.robot.commands.GyroDriveAuton;
+import org.usfirst.frc.team1711.robot.commands.PowerWinch;
 import org.usfirst.frc.team1711.robot.commands.RawJoystickDrive;
 import org.usfirst.frc.team1711.robot.subsystems.DriveSystem;
 import org.usfirst.frc.team1711.robot.subsystems.Lift;
@@ -31,6 +32,7 @@ public class Robot extends IterativeRobot
 
 	Command autonomousCommand;
 	Command teleopDrive;
+	Command liftControl;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
@@ -47,6 +49,8 @@ public class Robot extends IterativeRobot
 		//teleopDrive = new RawJoystickDrive();
 		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
 		// chooser.addObject("My Auto", new MyAutoCommand());
+		
+		liftControl = new PowerWinch();
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 
@@ -58,7 +62,7 @@ public class Robot extends IterativeRobot
 	@Override
 	public void disabledInit() 
 	{
-
+		liftControl.cancel();
 	}
 
 	@Override
@@ -116,6 +120,7 @@ public class Robot extends IterativeRobot
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 //		teleopDrive.start();
+		liftControl.start();
 	}
 
 	/**

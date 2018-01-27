@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Lift extends Subsystem 
 {
     TalonSRX liftTalon;
+    TalonSRX otherLiftTalon;
     TalonSRX brakeTalon;
     
     DigitalInput topLimitSwitch;
@@ -25,6 +26,7 @@ public class Lift extends Subsystem
     public Lift()
     {
     	liftTalon = new TalonSRX(RobotMap.liftMotor);
+    	otherLiftTalon = new TalonSRX(RobotMap.otherLiftMotor);
     	liftTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
     	
     	brakeTalon = new TalonSRX(RobotMap.brakeMotor);
@@ -37,6 +39,7 @@ public class Lift extends Subsystem
     {
     	//percent output has a range of -1 to 1
     	liftTalon.set(ControlMode.PercentOutput, speed);
+    	otherLiftTalon.set(ControlMode.PercentOutput, speed);
     }
     
     public void setPositionMode(int setPoint)
