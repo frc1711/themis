@@ -67,7 +67,7 @@ public class DriveSystem extends Subsystem
     
     public void orthoDriving(double direction)
     {
-    	mecanumDrive.driveCartesian(RobotMap.driveStick.getRawAxis(RobotMap.rotationAxis),0, 0);
+    	mecanumDrive.driveCartesian(0,RobotMap.driveStick.getRawAxis(RobotMap.rotationAxis), 0);
     }
     
     public void stopRobot()
