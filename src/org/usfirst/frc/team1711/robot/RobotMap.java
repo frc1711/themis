@@ -12,9 +12,9 @@ public class RobotMap
 {
 	//MOTORS
 	//drive motors
-	public static int FRD = 3;
-	public static int FLD = 1;
-	public static int RRD = 2;
+	public static int FRD = 2;
+	public static int FLD = 3;
+	public static int RRD = 1;
 	public static int RLD = 0;
 	//other motors
 	public static int liftMotor = 0;

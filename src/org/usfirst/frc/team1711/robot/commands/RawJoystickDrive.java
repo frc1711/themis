@@ -28,7 +28,7 @@ public class RawJoystickDrive extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	if((Math.abs(RobotMap.driveStick.getRawAxis(1)) > 0.08) || (Math.abs(RobotMap.driveStick.getRawAxis(0)) > 0.08))
+/*    	if((Math.abs(RobotMap.driveStick.getRawAxis(1)) > 0.08) || (Math.abs(RobotMap.driveStick.getRawAxis(0)) > 0.08))
     	{
     		switch(type)
         	{
@@ -39,7 +39,9 @@ public class RawJoystickDrive extends Command
     	    	case DIFFERENTIAL:
     	    		Robot.driveSystem.arcadeDriving();
         	}
-    	}
+    	} */
+    	
+    	Robot.driveSystem.cartesianDrive();
     }
     	
 

@@ -25,10 +25,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot 
 {
 
-	public static RobotMap robotMap;
-	public static OI oi;
+	public static RobotMap robotMap; //GOTTA B FIRST
 	public static DriveSystem driveSystem;
 	public static Lift lift;
+	public static OI oi; //THIS MUST BE LAST
 
 	Command autonomousCommand;
 	Command teleopDrive;
@@ -44,9 +44,9 @@ public class Robot extends IterativeRobot
 	{
 		robotMap = new RobotMap();
 		robotMap.init();
-		//driveSystem = new DriveSystem(DriveSystem.DriveType.MECANUM);
+		driveSystem = new DriveSystem(DriveSystem.DriveType.MECANUM);
 		lift = new Lift();
-		//teleopDrive = new RawJoystickDrive();
+		teleopDrive = new RawJoystickDrive();
 		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		
@@ -119,7 +119,7 @@ public class Robot extends IterativeRobot
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-//		teleopDrive.start();
+ 		teleopDrive.start();
 		liftControl.start();
 	}
 
