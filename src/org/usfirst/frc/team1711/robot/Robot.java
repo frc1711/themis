@@ -5,7 +5,10 @@ import org.usfirst.frc.team1711.robot.commands.GyroDriveAuton;
 import org.usfirst.frc.team1711.robot.commands.PowerWinch;
 import org.usfirst.frc.team1711.robot.commands.RawJoystickDrive;
 import org.usfirst.frc.team1711.robot.subsystems.DriveSystem;
+import org.usfirst.frc.team1711.robot.subsystems.IntakeSystem;
 import org.usfirst.frc.team1711.robot.subsystems.Lift;
+
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -25,14 +28,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot 
 {
 
-	public static RobotMap robotMap; //GOTTA B FIRST
+	public static RobotMap robotMap;
 	public static DriveSystem driveSystem;
 	public static Lift lift;
-	public static OI oi; //THIS MUST BE LAST
+	public static IntakeSystem intake;
+	public static OI oi;
 
 	Command autonomousCommand;
 	Command teleopDrive;
 	Command liftControl;
+	public static TalonSRX testMotor;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
@@ -46,12 +51,21 @@ public class Robot extends IterativeRobot
 		robotMap.init();
 		driveSystem = new DriveSystem(DriveSystem.DriveType.MECANUM);
 		lift = new Lift();
+		intake = new IntakeSystem();
 		teleopDrive = new RawJoystickDrive();
 		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		
+		SendableChooser<TalonSRX> motorTester = new SendableChooser<>();
+		
+		motorTester.addObject("Front left", Robot.driveSystem.frontLeftDrive);
+		motorTester.addObject("Front right", Robot.driveSystem.frontRightDrive);
+		motorTester.addObject("Rear left", Robot.driveSystem.rearLeftDrive);
+		motorTester.addObject("Rear right", Robot.driveSystem.rearRightDrive);
+		
 		liftControl = new PowerWinch();
 		SmartDashboard.putData("Auto mode", chooser);
+		SmartDashboard.putData("Motor testing", motorTester);
 	}
 
 	/**
@@ -119,6 +133,8 @@ public class Robot extends IterativeRobot
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		
+		
  		teleopDrive.start();
 		liftControl.start();
 	}
@@ -130,9 +146,9 @@ public class Robot extends IterativeRobot
 	public void teleopPeriodic() 
 	{
 		//System.out.println("Gyro: " + Robot.driveSystem.gyro.getAngle());
-		System.out.println("Brake: " + Robot.lift.brakeSwitch.get());
-		System.out.println("Bottom: " + Robot.lift.getBottomLimitSwitch());
-		System.out.println("Top: " + Robot.lift.getTopLimitSwitch());
+//		System.out.println("Brake: " + Robot.lift.brakeSwitch.get());
+//		System.out.println("Bottom: " + Robot.lift.getBottomLimitSwitch());
+//		System.out.println("Top: " + Robot.lift.getTopLimitSwitch());
 		Scheduler.getInstance().run();
 	}
 

@@ -1,6 +1,9 @@
 package org.usfirst.frc.team1711.robot;
 
 import org.usfirst.frc.team1711.robot.commands.BrakeWinch;
+import org.usfirst.frc.team1711.robot.commands.Expel;
+import org.usfirst.frc.team1711.robot.commands.Intake;
+import org.usfirst.frc.team1711.robot.commands.MotorTest;
 import org.usfirst.frc.team1711.robot.commands.OrthoLockDrive;
 
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -42,10 +45,19 @@ public class OI
 	// button.whenReleased(new ExampleCommand());
 	JoystickButton orthoButton = new JoystickButton(RobotMap.driveStick, 1);
 	JoystickButton winchBrakeButton = new JoystickButton(RobotMap.auxStick, 2);
+	JoystickButton motorTestButton = new JoystickButton(RobotMap.driveStick, 3);
+	
+	JoystickButton intakeButton = new JoystickButton(RobotMap.driveStick, 5);
+	JoystickButton expelButton = new JoystickButton(RobotMap.driveStick, 6);
+	
 	
 	public OI()
 	{
 		winchBrakeButton.whenPressed(new BrakeWinch());
+		motorTestButton.whileHeld(new MotorTest(Robot.driveSystem.rearRightDrive));
+		
+		intakeButton.whileHeld(new Intake());
+		expelButton.whileHeld(new Expel());
 //		orthoButton.whileHeld(new OrthoLockDrive());
 	}
 }
