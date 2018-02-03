@@ -1,11 +1,13 @@
 package org.usfirst.frc.team1711.robot.subsystems;
 
 import org.usfirst.frc.team1711.robot.RobotMap;
+import org.usfirst.frc.team1711.robot.commands.RawJoystickDrive;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -16,10 +18,10 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
  */
 public class DriveSystem extends Subsystem 
 {
-	WPI_TalonSRX frontLeftDrive;
-	WPI_TalonSRX frontRightDrive;
-	WPI_TalonSRX rearLeftDrive;
-	WPI_TalonSRX rearRightDrive;
+	public WPI_TalonSRX frontLeftDrive;
+	public WPI_TalonSRX frontRightDrive;
+	public WPI_TalonSRX rearLeftDrive;
+	public WPI_TalonSRX rearRightDrive;
 	
 	public ADXRS450_Gyro gyro;
 	
@@ -37,13 +39,13 @@ public class DriveSystem extends Subsystem
 	
     public DriveSystem(DriveType type)
     {
-    	frontLeftDrive = new WPI_TalonSRX(RobotMap.FRD);
-    	frontRightDrive = new WPI_TalonSRX(RobotMap.FLD);
-    	rearLeftDrive = new WPI_TalonSRX(RobotMap.RRD);
-    	rearRightDrive = new WPI_TalonSRX(RobotMap.FRD);
+    	frontLeftDrive = new WPI_TalonSRX(RobotMap.FLD);
+    	frontRightDrive = new WPI_TalonSRX(RobotMap.FRD);
+    	rearLeftDrive = new WPI_TalonSRX(RobotMap.RLD);
+    	rearRightDrive = new WPI_TalonSRX(RobotMap.RRD);
     	
     	frontRightDrive.setInverted(true);
-    	rearLeftDrive.setInverted(true);
+    	rearRightDrive.setInverted(true);
     	
     	left = new SpeedControllerGroup(frontLeftDrive, rearLeftDrive);
     	right = new SpeedControllerGroup(frontRightDrive, rearRightDrive);
@@ -58,14 +60,19 @@ public class DriveSystem extends Subsystem
     
     public void arcadeDriving()
     {
-    	basicDrive.arcadeDrive(-1 * RobotMap.driveStick.getRawAxis(RobotMap.throttleAxis), RobotMap.driveStick.getRawAxis(RobotMap.rotationAxis));
+    	basicDrive.arcadeDrive(RobotMap.driveStick.getY(GenericHID.Hand.kLeft), RobotMap.driveStick.getX(GenericHID.Hand.kLeft));
     }
     
     public void cartesianDrive()
     {
-    	mecanumDrive.driveCartesian(RobotMap.driveStick.getRawAxis(0),
-    			RobotMap.driveStick.getRawAxis(4),
-    			RobotMap.driveStick.getRawAxis(1));
+    	if(Math.abs(RobotMap.driveStick.getX(GenericHID.Hand.kLeft)) > 0.15 ||
+    			Math.abs(RobotMap.driveStick.getY(GenericHID.Hand.kLeft)) > 0.15 ||
+    			Math.abs(RobotMap.driveStick.getY(GenericHID.Hand.kRight)) > 0.15)
+    	{
+    		mecanumDrive.driveCartesian(-1 * RobotMap.driveStick.getX(GenericHID.Hand.kLeft),
+        			-1 * RobotMap.driveStick.getY(GenericHID.Hand.kLeft),
+        			RobotMap.driveStick.getX(GenericHID.Hand.kRight));
+    	}
     }
     
     public void mecanumDriving(double magnitude, double angle, double rotation)
@@ -120,8 +127,7 @@ public class DriveSystem extends Subsystem
 
     public void initDefaultCommand() 
     {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new RawJoystickDrive());
     }
 }
 
