@@ -1,3 +1,5 @@
+package org.usfirst.frc.team1711.robot;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -17,13 +19,13 @@ public class Controller extends XboxController
 		
 		if(theta > 0)
 		{
-			if(y < 0)
+			if(y > 0)
 				theta += (Math.PI/2);
 		}
 		else
 		{
 			theta *= -1;
-			if(y > 0)
+			if(y < 0)
 				theta += ((6 * Math.PI)/4);
 			else
 				theta += Math.PI;
@@ -38,6 +40,8 @@ public class Controller extends XboxController
 		double x = this.getX(hand);
 		
 		double magnitude = Math.sqrt((y*y) + (x*x));
+		
+		if(magnitude > 1) {magnitude = 1;}
 		
 		return magnitude;
 	}

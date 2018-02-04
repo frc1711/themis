@@ -3,6 +3,7 @@ package org.usfirst.frc.team1711.robot.subsystems;
 import org.usfirst.frc.team1711.robot.RobotMap;
 import org.usfirst.frc.team1711.robot.commands.RawJoystickDrive;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -29,7 +30,7 @@ public class DriveSystem extends Subsystem
 	double[] loadProfile = {1, 1, 1, 1};
 	double[] rawAxleLoads = {1, 1, 1, 1};
 	
-	boolean secretMode = false;
+	boolean secretMode = true;
 	
 	DifferentialDrive basicDrive;
 	MecanumDrive mecanumDrive;
@@ -50,13 +51,10 @@ public class DriveSystem extends Subsystem
     	rearLeftDrive = new WPI_TalonSRX(RobotMap.RLD);
     	rearRightDrive = new WPI_TalonSRX(RobotMap.RRD);
     	
-    	frontRightDrive.setInverted(true);
-    	rearRightDrive.setInverted(true);
+//    	left = new SpeedControllerGroup(frontLeftDrive, rearLeftDrive);
+//    	right = new SpeedControllerGroup(frontRightDrive, rearRightDrive);
     	
-    	left = new SpeedControllerGroup(frontLeftDrive, rearLeftDrive);
-    	right = new SpeedControllerGroup(frontRightDrive, rearRightDrive);
-    	
-    	basicDrive = new DifferentialDrive(left, right);
+//    	basicDrive = new DifferentialDrive(left, right);
     	mecanumDrive = new MecanumDrive(frontLeftDrive, rearLeftDrive, frontRightDrive, rearRightDrive);
     	
     	gyro = new ADXRS450_Gyro();
@@ -84,6 +82,9 @@ public class DriveSystem extends Subsystem
     public void polarDrive(double angle, double magnitude, double rotation)
     {
     	double largestValue = 0;
+    	
+    	if(angle < 0)
+    		angle = ((2*Math.PI) + angle);
     	
     	//this code is based on this pdf:
     	//http://thinktank.wpi.edu/resources/346/ControllingMecanumDrive.pdf
@@ -117,7 +118,18 @@ public class DriveSystem extends Subsystem
     	}
     	else if(secretMode)
     	{
+    		double scale = Math.abs(rotation) + magnitude;
+    		if(scale > 1) {scale = 1;}
     		
+    		frontLeft /= largestValue;
+    		frontRight /= largestValue;
+    		rearLeft /= largestValue;
+    		rearRight /= largestValue;
+    		
+    		frontLeft *= scale;
+    		frontRight *= scale;
+    		rearLeft *= scale;
+    		rearRight *= scale;
     	}
     	
     	setMotorOutputs(frontRight, frontLeft, rearRight, rearLeft);
@@ -191,10 +203,10 @@ public class DriveSystem extends Subsystem
     
     public void stopRobot()
     {
-    	frontLeftDrive.set(0);
-    	frontRightDrive.set(0);
-    	rearLeftDrive.set(0);
-    	rearRightDrive.set(0); 
+    	frontLeftDrive.set(ControlMode.PercentOutput, 0);
+    	frontRightDrive.set(ControlMode.PercentOutput, 0);
+    	rearLeftDrive.set(ControlMode.PercentOutput, 0);
+    	rearRightDrive.set(ControlMode.PercentOutput, 0); 
     }
     
     public void turn(int angle, double speed)
@@ -210,18 +222,18 @@ public class DriveSystem extends Subsystem
     
     private void turnRight(double speed)
     {
-    	frontLeftDrive.set(speed);
-    	frontRightDrive.set(speed);
-    	rearLeftDrive.set(-speed);
-    	rearRightDrive.set(-speed); 
+    	frontLeftDrive.set(ControlMode.PercentOutput, speed);
+    	frontRightDrive.set(ControlMode.PercentOutput, speed);
+    	rearLeftDrive.set(ControlMode.PercentOutput, -speed);
+    	rearRightDrive.set(ControlMode.PercentOutput, -speed); 
     }
     
     public void turnLeft(double speed)
     {
-    	frontLeftDrive.set(-speed);
-    	frontRightDrive.set(-speed);
-    	rearLeftDrive.set(speed);
-    	rearRightDrive.set(speed); 
+    	frontLeftDrive.set(ControlMode.PercentOutput, -speed);
+    	frontRightDrive.set(ControlMode.PercentOutput, -speed);
+    	rearLeftDrive.set(ControlMode.PercentOutput, speed);
+    	rearRightDrive.set(ControlMode.PercentOutput, speed); 
     }
     
     public void zeroGyro()

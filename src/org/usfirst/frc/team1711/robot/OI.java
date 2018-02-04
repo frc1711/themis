@@ -54,7 +54,10 @@ public class OI
 	public OI()
 	{
 		winchBrakeButton.whenPressed(new BrakeWinch());
-		motorTestButton.whileHeld(new MotorTest(Robot.driveSystem.rearRightDrive));
+		motorTestButton.whileHeld(new MotorTest(Robot.driveSystem.rearRightDrive,
+				Robot.driveSystem.frontLeftDrive,
+				Robot.driveSystem.frontRightDrive,
+				Robot.driveSystem.rearLeftDrive)); 
 		
 		intakeButton.whileHeld(new Intake());
 		expelButton.whileHeld(new Expel());

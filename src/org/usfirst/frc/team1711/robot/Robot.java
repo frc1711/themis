@@ -10,6 +10,7 @@ import org.usfirst.frc.team1711.robot.subsystems.Lift;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -53,19 +54,13 @@ public class Robot extends IterativeRobot
 		lift = new Lift();
 		intake = new IntakeSystem();
 		teleopDrive = new RawJoystickDrive();
-		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
+		
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		
-		SendableChooser<TalonSRX> motorTester = new SendableChooser<>();
-		
-		motorTester.addObject("Front left", Robot.driveSystem.frontLeftDrive);
-		motorTester.addObject("Front right", Robot.driveSystem.frontRightDrive);
-		motorTester.addObject("Rear left", Robot.driveSystem.rearLeftDrive);
-		motorTester.addObject("Rear right", Robot.driveSystem.rearRightDrive);
 		
 		liftControl = new PowerWinch();
 		SmartDashboard.putData("Auto mode", chooser);
-		SmartDashboard.putData("Motor testing", motorTester);
+		
+		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
 	}
 
 	/**
@@ -147,6 +142,10 @@ public class Robot extends IterativeRobot
 //		System.out.println("Brake: " + Robot.lift.brakeSwitch.get());
 //		System.out.println("Bottom: " + Robot.lift.getBottomLimitSwitch());
 //		System.out.println("Top: " + Robot.lift.getTopLimitSwitch());
+		System.out.println("Angle: " + RobotMap.driveStick.getDirectionRadians());
+		System.out.println("X axis: " + RobotMap.driveStick.getX(GenericHID.Hand.kLeft));
+		System.out.println("Y axis: " + RobotMap.driveStick.getY(GenericHID.Hand.kLeft));
+		System.out.println("Magnitude: " + RobotMap.driveStick.getMagnitude());
 		Scheduler.getInstance().run();
 	}
 

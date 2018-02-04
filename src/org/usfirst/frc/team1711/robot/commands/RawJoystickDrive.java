@@ -44,9 +44,10 @@ public class RawJoystickDrive extends Command
     	} */
     	
     	//Robot.driveSystem.cartesianDrive();
-    	Robot.driveSystem.polarDrive(RobotMap.driveStick.getAngle(GenericHID.Hand.kLeft),
-    			RobotMap.driveStick.getMagnitude(GenericHID.Hand.kLeft),
-    			RobotMap.driveStick.getRawAxis(4));
+    	
+    	Robot.driveSystem.polarDrive(RobotMap.driveStick.getDirectionRadians(),
+    			RobotMap.driveStick.getMagnitude(),
+    			RobotMap.driveStick.getRawAxis(4)); 
     }
     	
 
