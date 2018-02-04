@@ -4,6 +4,7 @@ import org.usfirst.frc.team1711.robot.Robot;
 import org.usfirst.frc.team1711.robot.RobotMap;
 import org.usfirst.frc.team1711.robot.subsystems.DriveSystem;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -23,6 +24,7 @@ public class RawJoystickDrive extends Command
     // Called just before this Command runs the first time
     protected void initialize() 
     {
+ //   	Robot.driveSystem.enableLoadProfiling();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -42,7 +44,9 @@ public class RawJoystickDrive extends Command
     	} */
     	
     	//Robot.driveSystem.cartesianDrive();
-    	Robot.driveSystem.arcadeDriving();
+    	Robot.driveSystem.polarDrive(RobotMap.driveStick.getAngle(GenericHID.Hand.kLeft),
+    			RobotMap.driveStick.getMagnitude(GenericHID.Hand.kLeft),
+    			RobotMap.driveStick.getRawAxis(4));
     }
     	
 
