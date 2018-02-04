@@ -35,12 +35,12 @@ public class RobotMap
 	public static int bottomLiftSwitch = 1;
 	public static int brakeSwitch = 2;
 	
-	public static XboxController driveStick;
-	public static XboxController auxStick;
+	public static Controller driveStick;
+	public static Controller auxStick;
 	
 	public void init()
 	{
-		driveStick = new XboxController(0);
-		auxStick = new XboxController(1);
+		driveStick = new Controller(0);
+		auxStick = new Controller(1);
 	}
 }
