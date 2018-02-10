@@ -1,29 +1,38 @@
-package org.usfirst.frc.team1711.robot.commands;
+package org.usfirst.frc.team1711.robot.commands.drive;
 
 import org.usfirst.frc.team1711.robot.Robot;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class Intake extends Command {
+public class MotorTest extends Command 
+{
+	TalonSRX motor;
 
-    public Intake() 
+    public MotorTest(TalonSRX motor) 
     {
-        requires(Robot.intake);
+        requires(Robot.driveSystem);
+        this.motor = motor;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() 
     {
+    	motor.set(ControlMode.PercentOutput, 0);
     	
+    	if((motor == Robot.driveSystem.frontRightDrive) || (motor == Robot.driveSystem.rearRightDrive))
+    		motor.setInverted(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	Robot.intake.intake();
+    	motor.set(ControlMode.PercentOutput, 0.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,13 +44,13 @@ public class Intake extends Command {
     // Called once after isFinished returns true
     protected void end() 
     {
-    	Robot.intake.stop();
+    	motor.set(ControlMode.PercentOutput, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() 
     {
-    	Robot.intake.stop();
+    	motor.set(ControlMode.PercentOutput, 0);
     }
 }
