@@ -23,7 +23,7 @@ public class DriveSystem extends Subsystem
 	public WPI_TalonSRX rearLeftDrive;
 	public WPI_TalonSRX rearRightDrive;
 	
-	public ADXRS450_Gyro gyro;s
+	public ADXRS450_Gyro gyro;
 	
 	boolean secretMode = false;
 	
@@ -82,6 +82,48 @@ public class DriveSystem extends Subsystem
     	frontRightDrive.set(-speed);
     	rearLeftDrive.set(speed);
     	rearRightDrive.set(speed); 
+    }
+    
+    public double getFrontLeftEncoder()
+    {
+    	return frontLeftDrive.getSensorCollection().getQuadraturePosition();
+    }
+    
+    public double getFrontRightEncoder()
+    {
+    	return frontRightDrive.getSensorCollection().getQuadraturePosition();
+    }
+    
+    public double getRearLeftEncoder()
+    {
+    	return rearLeftDrive.getSensorCollection().getQuadraturePosition();
+    }
+    
+    public double getRearRightEncoder()
+    {
+    	return rearRightDrive.getSensorCollection().getQuadraturePosition();
+    }
+    
+    public double getAverageEncoderValue()
+    {
+    	double frontLeft = getFrontLeftEncoder();
+    	double frontRight = getFrontRightEncoder();
+    	double rearLeft = getRearLeftEncoder();
+    	double rearRight = getRearRightEncoder();
+    	
+    	double sum = frontLeft + frontRight + rearLeft + rearRight;
+    	double average = sum / 4;
+    	
+    	return average;
+    }
+    
+    public void zeroEncoders()
+    {
+    	//second number is timeout in ms
+    	frontLeftDrive.getSensorCollection().setQuadraturePosition(0, 15);
+    	frontRightDrive.getSensorCollection().setQuadraturePosition(0, 15);
+    	rearLeftDrive.getSensorCollection().setQuadraturePosition(0, 15);
+    	rearRightDrive.getSensorCollection().setQuadraturePosition(0, 15);
     }
     
     public double getGyroAngle()

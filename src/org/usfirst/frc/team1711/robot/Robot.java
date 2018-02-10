@@ -1,7 +1,6 @@
 
 package org.usfirst.frc.team1711.robot;
 
-import org.usfirst.frc.team1711.robot.commands.auton.GyroDriveAuton;
 import org.usfirst.frc.team1711.robot.commands.drive.OrthoSwitchDrive;
 import org.usfirst.frc.team1711.robot.commands.drive.RawJoystickDrive;
 import org.usfirst.frc.team1711.robot.commands.lift.PowerWinch;
@@ -9,12 +8,10 @@ import org.usfirst.frc.team1711.robot.subsystems.DriveSystem;
 import org.usfirst.frc.team1711.robot.subsystems.IntakeSystem;
 import org.usfirst.frc.team1711.robot.subsystems.Lift;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
