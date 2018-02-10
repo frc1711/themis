@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1711.robot;
 
 import org.usfirst.frc.team1711.robot.commands.EncoderCalibration;
+import org.usfirst.frc.team1711.robot.commands.LiftEncoderCalibration;
 import org.usfirst.frc.team1711.robot.commands.drive.MotorTest;
 import org.usfirst.frc.team1711.robot.commands.intake.Expel;
 import org.usfirst.frc.team1711.robot.commands.intake.Intake;
@@ -46,6 +47,7 @@ public class OI
 	JoystickButton orthoButton = new JoystickButton(RobotMap.driveStick, 1);
 	JoystickButton winchBrakeButton = new JoystickButton(RobotMap.auxStick, 2);
 	JoystickButton calibrateEncoderButton = new JoystickButton(RobotMap.driveStick, 3);
+	JoystickButton calibrateLiftEncoder = new JoystickButton(RobotMap.driveStick, 4);
 	
 	JoystickButton intakeButton = new JoystickButton(RobotMap.driveStick, 5);
 	JoystickButton expelButton = new JoystickButton(RobotMap.driveStick, 6);
@@ -56,6 +58,7 @@ public class OI
 		winchBrakeButton.whenPressed(new BrakeWinch());
 		
 		calibrateEncoderButton.whenPressed(new EncoderCalibration(10, true));
+		calibrateLiftEncoder.whenPressed(new LiftEncoderCalibration(10));
 		
 		intakeButton.whileHeld(new Intake());
 		expelButton.whileHeld(new Expel());

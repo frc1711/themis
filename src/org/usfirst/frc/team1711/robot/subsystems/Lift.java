@@ -39,7 +39,7 @@ public class Lift extends Subsystem
     {
     	//percent output has a range of -1 to 1
     	liftTalon.set(ControlMode.PercentOutput, speed);
-    	otherLiftTalon.set(ControlMode.PercentOutput, speed);
+    	otherLiftTalon.set(ControlMode.Follower, RobotMap.liftMotor);
     }
     
     public void setPositionMode(int setPoint)
@@ -70,6 +70,17 @@ public class Lift extends Subsystem
     public boolean getBottomLimitSwitch()
     {
     	return bottomLimitSwitch.get();
+    }
+    
+    public double getLiftEncoder()
+    {
+    	return liftTalon.getSensorCollection().getQuadraturePosition();
+    }
+    
+    public void zeroLiftEncoder()
+    {
+    	//second number is timeout in ms
+    	liftTalon.getSensorCollection().setQuadraturePosition(0, 15);
     }
 
     public void initDefaultCommand() 
