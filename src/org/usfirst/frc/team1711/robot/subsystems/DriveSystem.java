@@ -135,6 +135,20 @@ public class DriveSystem extends Subsystem
     {
     	gyro.reset();
     }
+    
+    public void printOutput(int setting)
+    {
+    	switch(setting)
+    	{
+    	case 0:
+    		System.out.println("Average encoder: " + getAverageEncoderValue());
+    	case 1:
+    		System.out.println("Front left " + getFrontLeftEncoder());
+    		System.out.println("Front right " + getFrontRightEncoder());
+    		System.out.println("Rear left " + getRearLeftEncoder());
+    		System.out.println("Rear right " + getRearRightEncoder());
+    	}
+    }
 
     public void initDefaultCommand() 
     {

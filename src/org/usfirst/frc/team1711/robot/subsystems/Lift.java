@@ -82,6 +82,15 @@ public class Lift extends Subsystem
     	//second number is timeout in ms
     	liftTalon.getSensorCollection().setQuadraturePosition(0, 15);
     }
+    
+    public void printOutput(int setting)
+    {
+    	switch(setting)
+    	{
+    	case 0: 
+    		System.out.println("Lift encoder: " + getLiftEncoder());
+    	}
+    }
 
     public void initDefaultCommand() 
     {
