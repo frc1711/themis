@@ -27,7 +27,7 @@ public class RobotMap
 	//placeholder numbers
 	public static int throttleAxis = 1;
 	public static int rotationAxis = 0;
-	public static int holoRotationAxis = 2; 
+	public static int holoRotationAxis = 2;
 	
 	//sensors
 	//digital ports
