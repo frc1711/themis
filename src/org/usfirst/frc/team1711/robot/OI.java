@@ -1,10 +1,10 @@
 package org.usfirst.frc.team1711.robot;
 
-import org.usfirst.frc.team1711.robot.commands.BrakeWinch;
-import org.usfirst.frc.team1711.robot.commands.Expel;
-import org.usfirst.frc.team1711.robot.commands.Intake;
-import org.usfirst.frc.team1711.robot.commands.MotorTest;
-import org.usfirst.frc.team1711.robot.commands.OrthoLockDrive;
+import org.usfirst.frc.team1711.robot.commands.drive.MotorTest;
+import org.usfirst.frc.team1711.robot.commands.drive.OrthoLockDrive;
+import org.usfirst.frc.team1711.robot.commands.intake.Expel;
+import org.usfirst.frc.team1711.robot.commands.intake.Intake;
+import org.usfirst.frc.team1711.robot.commands.lift.BrakeWinch;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
