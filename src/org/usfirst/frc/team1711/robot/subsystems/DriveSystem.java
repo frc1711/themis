@@ -23,21 +23,13 @@ public class DriveSystem extends Subsystem
 	public WPI_TalonSRX rearLeftDrive;
 	public WPI_TalonSRX rearRightDrive;
 	
-	public ADXRS450_Gyro gyro;
+	public ADXRS450_Gyro gyro;s
 	
-	DifferentialDrive basicDrive;
+	boolean secretMode = false;
+	
 	MecanumDrive mecanumDrive;
 	
-	SpeedControllerGroup left;
-	SpeedControllerGroup right;
-	
-	public enum DriveType {
-		MECANUM, DIFFERENTIAL
-	}
-	
-	public DriveType type;
-	
-    public DriveSystem(DriveType type)
+    public DriveSystem()
     {
     	frontLeftDrive = new WPI_TalonSRX(RobotMap.FLD);
     	frontRightDrive = new WPI_TalonSRX(RobotMap.FRD);
@@ -47,42 +39,14 @@ public class DriveSystem extends Subsystem
     	frontRightDrive.setInverted(true);
     	rearRightDrive.setInverted(true);
     	
-    	left = new SpeedControllerGroup(frontLeftDrive, rearLeftDrive);
-    	right = new SpeedControllerGroup(frontRightDrive, rearRightDrive);
-    	
-    	basicDrive = new DifferentialDrive(left, right);
     	mecanumDrive = new MecanumDrive(frontLeftDrive, rearLeftDrive, frontRightDrive, rearRightDrive);
     	
     	gyro = new ADXRS450_Gyro();
-    	
-    	this.type = type;
     }
     
-    public void arcadeDriving()
+    public void cartesianDrive(double y, double x, double rotation)
     {
-    	basicDrive.arcadeDrive(RobotMap.driveStick.getY(GenericHID.Hand.kLeft), RobotMap.driveStick.getX(GenericHID.Hand.kLeft));
-    }
-    
-    public void cartesianDrive()
-    {
-    	if(Math.abs(RobotMap.driveStick.getX(GenericHID.Hand.kLeft)) > 0.15 ||
-    			Math.abs(RobotMap.driveStick.getY(GenericHID.Hand.kLeft)) > 0.15 ||
-    			Math.abs(RobotMap.driveStick.getY(GenericHID.Hand.kRight)) > 0.15)
-    	{
-    		mecanumDrive.driveCartesian(-1 * RobotMap.driveStick.getX(GenericHID.Hand.kLeft),
-        			-1 * RobotMap.driveStick.getY(GenericHID.Hand.kLeft),
-        			RobotMap.driveStick.getX(GenericHID.Hand.kRight));
-    	}
-    }
-    
-    public void mecanumDriving(double magnitude, double angle, double rotation)
-    {
-    	mecanumDrive.drivePolar(magnitude, angle, rotation);
-    }
-    
-    public void orthoDriving(double direction)
-    {
-    	mecanumDrive.driveCartesian(0,RobotMap.driveStick.getRawAxis(RobotMap.rotationAxis), 0);
+    	mecanumDrive.driveCartesian(y, x, rotation);
     }
     
     public void stopRobot()
