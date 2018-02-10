@@ -25,6 +25,7 @@ public class TimedIntake extends TimedCommand {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
+    	Robot.intake.intake();
     }
 
     // Called once after timeout
