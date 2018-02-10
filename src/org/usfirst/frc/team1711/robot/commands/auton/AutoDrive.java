@@ -26,6 +26,8 @@ public class AutoDrive extends Command
     protected void initialize() 
     {
     	Robot.driveSystem.stopRobot();
+    	Robot.driveSystem.zeroEncoders();
+    	Robot.driveSystem.zeroGyro();
     }
 
     // Called repeatedly when this Command is scheduled to run

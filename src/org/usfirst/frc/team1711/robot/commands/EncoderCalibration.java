@@ -26,6 +26,8 @@ public class EncoderCalibration extends Command
     protected void initialize() 
     {
     	Robot.driveSystem.stopRobot();
+    	Robot.driveSystem.zeroGyro();
+    	Robot.driveSystem.zeroEncoders();
     }
 
     // Called repeatedly when this Command is scheduled to run
