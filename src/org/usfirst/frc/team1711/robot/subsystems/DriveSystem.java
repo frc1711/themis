@@ -23,27 +23,13 @@ public class DriveSystem extends Subsystem
 	public WPI_TalonSRX rearLeftDrive;
 	public WPI_TalonSRX rearRightDrive;
 	
-	public ADXRS450_Gyro gyro;
-	
-	boolean loadProfilingEnabled = false;
-	double[] loadProfile = {1, 1, 1, 1};
-	double[] rawAxleLoads = {1, 1, 1, 1};
+	public ADXRS450_Gyro gyro;s
 	
 	boolean secretMode = false;
 	
-	DifferentialDrive basicDrive;
 	MecanumDrive mecanumDrive;
 	
-	SpeedControllerGroup left;
-	SpeedControllerGroup right;
-	
-	public enum DriveType {
-		MECANUM, DIFFERENTIAL
-	}
-	
-	public DriveType type;
-	
-    public DriveSystem(DriveType type)
+    public DriveSystem()
     {
     	frontLeftDrive = new WPI_TalonSRX(RobotMap.FLD);
     	frontRightDrive = new WPI_TalonSRX(RobotMap.FRD);
@@ -53,140 +39,14 @@ public class DriveSystem extends Subsystem
     	frontRightDrive.setInverted(true);
     	rearRightDrive.setInverted(true);
     	
-    	left = new SpeedControllerGroup(frontLeftDrive, rearLeftDrive);
-    	right = new SpeedControllerGroup(frontRightDrive, rearRightDrive);
-    	
-    	basicDrive = new DifferentialDrive(left, right);
     	mecanumDrive = new MecanumDrive(frontLeftDrive, rearLeftDrive, frontRightDrive, rearRightDrive);
     	
     	gyro = new ADXRS450_Gyro();
-    	
-    	this.type = type;
     }
     
-    public void arcadeDriving()
+    public void cartesianDrive(double y, double x, double rotation)
     {
-    	basicDrive.arcadeDrive(RobotMap.driveStick.getY(GenericHID.Hand.kLeft), RobotMap.driveStick.getX(GenericHID.Hand.kLeft));
-    }
-    
-    public void cartesianDrive()
-    {
-    	if(Math.abs(RobotMap.driveStick.getX(GenericHID.Hand.kLeft)) > 0.15 ||
-    			Math.abs(RobotMap.driveStick.getY(GenericHID.Hand.kLeft)) > 0.15 ||
-    			Math.abs(RobotMap.driveStick.getY(GenericHID.Hand.kRight)) > 0.15)
-    	{
-    		mecanumDrive.driveCartesian(-1 * RobotMap.driveStick.getX(GenericHID.Hand.kLeft),
-        			-1 * RobotMap.driveStick.getY(GenericHID.Hand.kLeft),
-        			RobotMap.driveStick.getX(GenericHID.Hand.kRight));
-    	}
-    }
-    
-    public void polarDrive(double angle, double magnitude, double rotation)
-    {
-    	double largestValue = 0;
-    	
-    	//this code is based on this pdf:
-    	//http://thinktank.wpi.edu/resources/346/ControllingMecanumDrive.pdf
-    	//and this repository by Jack Smith:
-    	//https://bitbucket.org/jackdeansmith/raptors-2015/
-    	//please consult these sources before making changes to the following code
-    	
-    	double frontLeft = magnitude * (Math.sin(angle + Math.PI/4)) + rotation;
-    	largestValue = Math.abs(frontLeft); //used to normalize the motor outputs to fit in the range [-1, 1]
-    	
-    	double frontRight = magnitude * (Math.sin(angle + Math.PI/4)) - rotation;
-    	if(Math.abs(frontRight) > largestValue)
-    		largestValue = Math.abs(frontRight);
-    	
-    	double rearLeft = magnitude * (Math.sin(angle + Math.PI/4)) + rotation;
-    	if(Math.abs(rearLeft) > largestValue)
-    		largestValue = Math.abs(rearLeft);
-    	
-    	double rearRight = magnitude * (Math.sin(angle + Math.PI/4)) - rotation;
-    	if(Math.abs(rearRight) > largestValue)
-    		largestValue = Math.abs(rearRight);
-    	
-    	//normalize the values to fit within the output range
-    	if(largestValue > 1)
-    	{
-    		frontLeft /= largestValue;
-    		frontRight /= largestValue;
-    		rearLeft /= largestValue;
-    		rearRight /= largestValue;
-    		//alex wasn't here
-    	}
-    	else if(secretMode)
-    	{
-    		
-    	}
-    	
-    	setMotorOutputs(frontRight, frontLeft, rearRight, rearLeft);
-    	
-    }
-    
-    public void setMotorOutputs(double frontRight, double frontLeft, double rearRight, double rearLeft)
-    {
-    	frontLeftDrive.set(ControlMode.PercentOutput, frontLeft);
-    	frontRightDrive.set(ControlMode.PercentOutput, frontRight);
-    	rearLeftDrive.set(ControlMode.PercentOutput, rearLeft);
-    	rearRightDrive.set(ControlMode.PercentOutput, rearRight);
-    }
-    
-    public void enableLoadProfiling()
-    {
-    	loadProfilingEnabled = true;
-    }
-    
-    public void disableLoadProfiling()
-    {
-    	loadProfilingEnabled = false;
-    }
-    
-    public void setLoadProfile(double frontLeft, double frontRight, double rearLeft, double rearRight)
-    {
-    	rawAxleLoads[0] = frontLeft;
-    	rawAxleLoads[1] = frontRight;
-    	rawAxleLoads[2] = rearLeft;
-    	rawAxleLoads[3] = rearRight;
-    	
-    	//find the smallest load
-    	//this math is based on this repository:
-    	//https://bitbucket.org/jackdeansmith/raptors-2015/
-    	//please don't edit the following code without reading that first!
-    	double smallestLoad = frontLeft;
-    	if(frontRight < smallestLoad){smallestLoad = frontLeft;}
-    	if(rearLeft < smallestLoad){smallestLoad = rearLeft;}
-    	if(rearRight < smallestLoad){smallestLoad = rearRight;}
-    	
-    	//scale the loads
-    	frontLeft = smallestLoad/frontLeft;
-    	frontRight = smallestLoad/frontRight;
-    	rearLeft = smallestLoad/rearLeft;
-    	rearRight = smallestLoad/rearRight;
-    	
-    	//make sure the values are legit (i.e. positive)
-    	if(frontLeft >= 0 && frontRight >= 0 && rearLeft >= 0 && rearRight >= 0)
-    	{
-    		//set the final profiles
-    		loadProfile[0] = frontLeft;
-        	loadProfile[1] = frontRight;
-        	loadProfile[2] = rearLeft;
-        	loadProfile[3] = rearRight;
-    	}
-    	else
-    	{
-    		System.out.println("Some loads are negative, please recheck your values");
-    	}
-    }
-    
-    public void mecanumDriving(double magnitude, double angle, double rotation)
-    {
-    	mecanumDrive.drivePolar(magnitude, angle, rotation);
-    }
-    
-    public void orthoDriving(double direction)
-    {
-    	mecanumDrive.driveCartesian(0,RobotMap.driveStick.getRawAxis(RobotMap.rotationAxis), 0);
+    	mecanumDrive.driveCartesian(y, x, rotation);
     }
     
     public void stopRobot()

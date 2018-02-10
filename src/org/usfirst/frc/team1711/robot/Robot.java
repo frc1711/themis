@@ -2,6 +2,7 @@
 package org.usfirst.frc.team1711.robot;
 
 import org.usfirst.frc.team1711.robot.commands.GyroDriveAuton;
+import org.usfirst.frc.team1711.robot.commands.OrthoSwitchDrive;
 import org.usfirst.frc.team1711.robot.commands.PowerWinch;
 import org.usfirst.frc.team1711.robot.commands.RawJoystickDrive;
 import org.usfirst.frc.team1711.robot.subsystems.DriveSystem;
@@ -37,7 +38,6 @@ public class Robot extends IterativeRobot
 	Command autonomousCommand;
 	Command teleopDrive;
 	Command liftControl;
-	public static TalonSRX testMotor;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
@@ -49,23 +49,15 @@ public class Robot extends IterativeRobot
 	{
 		robotMap = new RobotMap();
 		robotMap.init();
-		driveSystem = new DriveSystem(DriveSystem.DriveType.MECANUM);
+		driveSystem = new DriveSystem();
 		lift = new Lift();
 		intake = new IntakeSystem();
-		teleopDrive = new RawJoystickDrive();
+		teleopDrive = new OrthoSwitchDrive();
+		liftControl = new PowerWinch();
 		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		
-		SendableChooser<TalonSRX> motorTester = new SendableChooser<>();
-		
-		motorTester.addObject("Front left", Robot.driveSystem.frontLeftDrive);
-		motorTester.addObject("Front right", Robot.driveSystem.frontRightDrive);
-		motorTester.addObject("Rear left", Robot.driveSystem.rearLeftDrive);
-		motorTester.addObject("Rear right", Robot.driveSystem.rearRightDrive);
-		
-		liftControl = new PowerWinch();
+	
 		SmartDashboard.putData("Auto mode", chooser);
-		SmartDashboard.putData("Motor testing", motorTester);
 	}
 
 	/**
@@ -143,10 +135,6 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopPeriodic() 
 	{
-		//System.out.println("Gyro: " + Robot.driveSystem.gyro.getAngle());
-//		System.out.println("Brake: " + Robot.lift.brakeSwitch.get());
-//		System.out.println("Bottom: " + Robot.lift.getBottomLimitSwitch());
-//		System.out.println("Top: " + Robot.lift.getTopLimitSwitch());
 		Scheduler.getInstance().run();
 	}
 
