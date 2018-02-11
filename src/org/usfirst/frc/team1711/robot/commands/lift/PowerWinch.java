@@ -13,53 +13,30 @@ public class PowerWinch extends Command
 	boolean lockMode = true;
 	boolean lockActive;
 	int setPoint;
+	double power;
 
-    public PowerWinch() 
+    public PowerWinch(double power) 
     {
         requires(Robot.lift);
+        this.power = power;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() 
     {
     	lockActive = false;
+    	Robot.lift.runLift(0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-/*    	if(lockMode && Math.abs(RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis)) < 0.1)
-    	{
-    		setPoint = Robot.lift.getLiftPosition();
-    		Robot.lift.setPositionMode(setPoint);
-    		lockActive = true;
-    	}
-    	
+    	if(Math.abs(RobotMap.driveStick.getRawAxis(2)) > .2)
+    		Robot.lift.runLift(-1 * RobotMap.driveStick.getRawAxis(2));
+    	else if(Math.abs(RobotMap.driveStick.getRawAxis(3)) > 0.2)
+    		Robot.lift.runLift(RobotMap.driveStick.getRawAxis(3));
     	else
-    	{
-    		lockActive = false;
-    		
-    		if((RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis) > 0.1) && !Robot.lift.getTopLimitSwitch())
-    		{
-    			Robot.lift.runLift(RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis));
-    		}
-    		
-    		else if((RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis) < -0.1) && !Robot.lift.getBottomLimitSwitch())
-    		{
-    			Robot.lift.runLift(RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis));
-    		}
-    	} */
-    	if(!Robot.lift.getTopLimitSwitch() && RobotMap.auxStick.getRawAxis(1) < 0)
-			Robot.lift.runLift(0);
-		else if(!Robot.lift.getBottomLimitSwitch() && RobotMap.auxStick.getRawAxis(1) > 0)
-    		Robot.lift.runLift(0); 
-		else
-		{
-			if(Math.abs(RobotMap.auxStick.getRawAxis(1)) > 0.1)
-	    		Robot.lift.runLift(RobotMap.auxStick.getRawAxis(1));
-	    	else
-	    		Robot.lift.runLift(0);
-		}
+    		Robot.lift.runLift(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

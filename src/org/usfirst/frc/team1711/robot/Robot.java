@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot
 		lift = new Lift();
 		intake = new IntakeSystem();
 		teleopDrive = new OrthoSwitchDrive();
-		liftControl = new PowerWinch();
+		liftControl = new PowerWinch(0);
 		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
 		// chooser.addObject("My Auto", new MyAutoCommand());
 	
@@ -63,7 +63,6 @@ public class Robot extends IterativeRobot
 	@Override
 	public void disabledInit() 
 	{
-		liftControl.cancel();
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import org.usfirst.frc.team1711.robot.commands.LiftEncoderCalibration;
 import org.usfirst.frc.team1711.robot.commands.intake.Expel;
 import org.usfirst.frc.team1711.robot.commands.intake.Intake;
 import org.usfirst.frc.team1711.robot.commands.lift.BrakeWinch;
+import org.usfirst.frc.team1711.robot.commands.lift.PowerWinch;
 
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -44,8 +45,10 @@ public class OI
 	// button.whenReleased(new ExampleCommand());
 	JoystickButton orthoButton = new JoystickButton(RobotMap.driveStick, 1);
 	JoystickButton winchBrakeButton = new JoystickButton(RobotMap.auxStick, 2);
-	JoystickButton calibrateEncoderButton = new JoystickButton(RobotMap.driveStick, 3);
-	JoystickButton calibrateLiftEncoder = new JoystickButton(RobotMap.driveStick, 4);
+	//JoystickButton calibrateEncoderButton = new JoystickButton(RobotMap.driveStick, 3);
+	//JoystickButton calibrateLiftEncoder = new JoystickButton(RobotMap.driveStick, 4);
+	JoystickButton runLift = new JoystickButton(RobotMap.driveStick, 4);
+	JoystickButton runLiftDown = new JoystickButton(RobotMap.driveStick, 3);
 	
 	JoystickButton intakeButton = new JoystickButton(RobotMap.driveStick, 5);
 	JoystickButton expelButton = new JoystickButton(RobotMap.driveStick, 6);
@@ -55,8 +58,10 @@ public class OI
 	{
 		winchBrakeButton.whenPressed(new BrakeWinch());
 		
-		calibrateEncoderButton.whenPressed(new EncoderCalibration(10, true));
-		calibrateLiftEncoder.whenPressed(new LiftEncoderCalibration(10));
+		//calibrateEncoderButton.whenPressed(new EncoderCalibration(10, true));
+		//calibrateLiftEncoder.whenPressed(new LiftEncoderCalibration(10));
+		runLift.whileHeld(new PowerWinch(-1));
+		runLiftDown.whileHeld(new PowerWinch(1));
 		
 		intakeButton.whileHeld(new Intake());
 		expelButton.whileHeld(new Expel());

@@ -102,7 +102,7 @@ public class Lift extends Subsystem
 
     public void initDefaultCommand() 
     {
-        setDefaultCommand(new PowerWinch());
+    	setDefaultCommand(new PowerWinch(0));
     }
 }
 
