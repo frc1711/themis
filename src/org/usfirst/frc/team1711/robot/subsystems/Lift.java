@@ -42,8 +42,9 @@ public class Lift extends Subsystem
     	otherLiftTalon.set(ControlMode.Follower, RobotMap.liftMotor);
     }
     
-    public void setPositionMode(int setPoint)
+    public void setPositionMode(double setPoint)
     {
+    	//the set point is in native rotation units
     	liftTalon.set(ControlMode.Position, setPoint);
     }
     
@@ -89,6 +90,9 @@ public class Lift extends Subsystem
     	{
     	case 0: 
     		System.out.println("Lift encoder: " + getLiftEncoder());
+    	case 1:
+    		System.out.println("Motor 1 current: " + liftTalon.getOutputCurrent());
+    		System.out.println("Motor 2 current: " + otherLiftTalon.getOutputCurrent());
     	}
     }
 
