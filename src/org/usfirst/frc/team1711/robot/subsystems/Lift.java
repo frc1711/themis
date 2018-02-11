@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -89,10 +90,13 @@ public class Lift extends Subsystem
     	switch(setting)
     	{
     	case 0: 
-    		System.out.println("Lift encoder: " + getLiftEncoder());
+    		//System.out.println("Lift encoder: " + getLiftEncoder());
+    		SmartDashboard.putNumber("Lift encoder", getLiftEncoder());
     	case 1:
-    		System.out.println("Motor 1 current: " + liftTalon.getOutputCurrent());
-    		System.out.println("Motor 2 current: " + otherLiftTalon.getOutputCurrent());
+    		//System.out.println("Motor 1 current: " + liftTalon.getOutputCurrent());
+    		//System.out.println("Motor 2 current: " + otherLiftTalon.getOutputCurrent());
+    		SmartDashboard.putNumber("Motor 1 current", liftTalon.getOutputCurrent());
+    		SmartDashboard.putNumber("Motor 2 current", otherLiftTalon.getOutputCurrent());
     	}
     }
 

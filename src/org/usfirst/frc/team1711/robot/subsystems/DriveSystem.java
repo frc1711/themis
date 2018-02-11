@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -141,12 +142,17 @@ public class DriveSystem extends Subsystem
     	switch(setting)
     	{
     	case 0:
-    		System.out.println("Average encoder: " + getAverageEncoderValue());
+    		//System.out.println("Average encoder: " + getAverageEncoderValue());
+    		SmartDashboard.putNumber("Average drive encoder value", getAverageEncoderValue());
     	case 1:
-    		System.out.println("Front left " + getFrontLeftEncoder());
-    		System.out.println("Front right " + getFrontRightEncoder());
-    		System.out.println("Rear left " + getRearLeftEncoder());
-    		System.out.println("Rear right " + getRearRightEncoder());
+    		//System.out.println("Front left " + getFrontLeftEncoder());
+    		//System.out.println("Front right " + getFrontRightEncoder());
+    		//System.out.println("Rear left " + getRearLeftEncoder());
+    		//System.out.println("Rear right " + getRearRightEncoder());
+    		SmartDashboard.putNumber("Front left", getFrontLeftEncoder());
+    		SmartDashboard.putNumber("Front right", getFrontRightEncoder());
+    		SmartDashboard.putNumber("Rear left", getRearLeftEncoder());
+    		SmartDashboard.putNumber("Rear right", getRearRightEncoder());
     	}
     }
 
