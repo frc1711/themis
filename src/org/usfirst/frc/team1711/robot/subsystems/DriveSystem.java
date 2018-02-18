@@ -38,7 +38,7 @@ public class DriveSystem extends Subsystem
     	rearRightDrive = new WPI_TalonSRX(RobotMap.RRD);
     	
     	frontRightDrive.setInverted(true);
-    	rearRightDrive.setInverted(true);
+    	rearLeftDrive.setInverted(true);
     	
     	mecanumDrive = new MecanumDrive(frontLeftDrive, rearLeftDrive, frontRightDrive, rearRightDrive);
     	
@@ -71,7 +71,7 @@ public class DriveSystem extends Subsystem
     
     private void turnRight(double speed)
     {
-    	frontLeftDrive.set(speed);
+    	frontLeftDrive.set(-speed);
     	frontRightDrive.set(speed);
     	rearLeftDrive.set(-speed);
     	rearRightDrive.set(-speed); 
@@ -80,8 +80,8 @@ public class DriveSystem extends Subsystem
     public void turnLeft(double speed)
     {
     	frontLeftDrive.set(-speed);
-    	frontRightDrive.set(-speed);
-    	rearLeftDrive.set(speed);
+    	frontRightDrive.set(speed);
+    	rearLeftDrive.set(-speed);
     	rearRightDrive.set(speed); 
     }
     
