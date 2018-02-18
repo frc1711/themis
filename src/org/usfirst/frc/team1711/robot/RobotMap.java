@@ -13,16 +13,16 @@ public class RobotMap
 {
 	//MOTORS
 	//drive motors
-	public static int FRD = 2;
-	public static int FLD = 3;
+	public static int FRD = 1;
+	public static int FLD = 4;
 	public static int RRD = 0;
-	public static int RLD = 1;
+	public static int RLD = 5;
 	//other motors
-	public static int liftMotor = 0;
-	public static int otherLiftMotor = 1;
-	public static int brakeMotor = 2;
-	public static int rightIntake = 6;
-	public static int leftIntake = 7; 
+	public static int liftMotor = 9;
+	public static int otherLiftMotor = 2;
+	public static int brakeMotor = 12;
+	public static int rightIntake = 8;
+	public static int leftIntake = 3; 
 	
 	//placeholder numbers
 	public static int throttleAxis = 1;
