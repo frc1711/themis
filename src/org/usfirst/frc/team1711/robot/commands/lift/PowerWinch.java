@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1711.robot.commands.lift;
 
+import org.usfirst.frc.team1711.robot.OI;
 import org.usfirst.frc.team1711.robot.Robot;
 import org.usfirst.frc.team1711.robot.RobotMap;
 
@@ -31,10 +32,8 @@ public class PowerWinch extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	if(Math.abs(RobotMap.driveStick.getRawAxis(2)) > .2)
-    		Robot.lift.runLift(-1 * RobotMap.driveStick.getRawAxis(2));
-    	else if(Math.abs(RobotMap.driveStick.getRawAxis(3)) > 0.2)
-    		Robot.lift.runLift(RobotMap.driveStick.getRawAxis(3));
+    	if(Math.abs(OI.driveStick.getRawAxis(0)) > .2)
+    		Robot.lift.runLift(OI.driveStick.getRawAxis(0));
     	else
     		Robot.lift.runLift(0);
     }

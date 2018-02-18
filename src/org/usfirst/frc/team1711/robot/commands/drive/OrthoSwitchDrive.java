@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1711.robot.commands.drive;
 
+import org.usfirst.frc.team1711.robot.OI;
 import org.usfirst.frc.team1711.robot.Robot;
 import org.usfirst.frc.team1711.robot.RobotMap;
 
@@ -24,12 +25,12 @@ public class OrthoSwitchDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	double x = -1 * RobotMap.driveStick.getRawAxis(1);
-    	double y = -1 * RobotMap.driveStick.getRawAxis(0);
-    	double stickRotation = RobotMap.driveStick.getRawAxis(4);
+    	double x = -1 * OI.driveStick.getRawAxis(1);
+    	double y = -1 * OI.driveStick.getRawAxis(0);
+    	double stickRotation = OI.driveStick.getRawAxis(4);
     	double gyroAngle = Robot.driveSystem.gyro.getAngle();
     	
-    	if(RobotMap.driveStick.getMagnitude() > RobotMap.XBOX_DEADZONE || Math.abs(stickRotation) > 0.2)
+    	if(OI.driveStick.getMagnitude() > RobotMap.XBOX_DEADZONE || Math.abs(stickRotation) > 0.2)
     	{
     		if(isOrthoMode())
     		{
@@ -45,7 +46,7 @@ public class OrthoSwitchDrive extends Command {
     
     private boolean isOrthoMode()
     {
-    	if(Math.abs(RobotMap.driveStick.getRawAxis(4)) > 0.2)
+    	if(Math.abs(OI.driveStick.getRawAxis(4)) > 0.2)
     		return false;
     	else
     		return true;

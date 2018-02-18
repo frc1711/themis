@@ -35,15 +35,14 @@ public class RobotMap
 	public static int bottomLiftSwitch = 1;
 	public static int brakeSwitch = 2;
 	
-	public static Joystick driveStick;
-	public static Joystick auxStick;
+	public static int driveStick = 0;
+	public static int auxStick = 0;
 	
 	//constants
 	public static final double XBOX_DEADZONE = 0.25;
 	
 	public void init()
 	{
-		driveStick = new Joystick(0);
-		auxStick = new Joystick(1);
+		
 	}
 }

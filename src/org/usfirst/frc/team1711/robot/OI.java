@@ -7,6 +7,7 @@ import org.usfirst.frc.team1711.robot.commands.intake.Intake;
 import org.usfirst.frc.team1711.robot.commands.lift.BrakeWinch;
 import org.usfirst.frc.team1711.robot.commands.lift.PowerWinch;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
@@ -16,46 +17,25 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI 
 {
-	//// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	//// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
-
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
-
-	//// TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
-
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
-
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new ExampleCommand());
-
-	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenReleased(new ExampleCommand());
-	JoystickButton orthoButton = new JoystickButton(RobotMap.driveStick, 1);
-	JoystickButton winchBrakeButton = new JoystickButton(RobotMap.auxStick, 2);
+	public static Joystick driveStick;
+	public static Joystick auxStick;
+	
+	JoystickButton orthoButton = new JoystickButton(driveStick, 1);
+	JoystickButton winchBrakeButton = new JoystickButton(auxStick, 2);
 	//JoystickButton calibrateEncoderButton = new JoystickButton(RobotMap.driveStick, 3);
 	//JoystickButton calibrateLiftEncoder = new JoystickButton(RobotMap.driveStick, 4);
-	JoystickButton runLift = new JoystickButton(RobotMap.driveStick, 4);
-	JoystickButton runLiftDown = new JoystickButton(RobotMap.driveStick, 3);
+	JoystickButton runLift = new JoystickButton(driveStick, 4);
+	JoystickButton runLiftDown = new JoystickButton(driveStick, 3);
 	
-	JoystickButton intakeButton = new JoystickButton(RobotMap.driveStick, 5);
-	JoystickButton expelButton = new JoystickButton(RobotMap.driveStick, 6);
+	JoystickButton intakeButton = new JoystickButton(driveStick, 5);
+	JoystickButton expelButton = new JoystickButton(driveStick, 6);
 	
 	
 	public OI()
 	{
+		driveStick = new Joystick(RobotMap.driveStick);
+		auxStick = new Joystick(RobotMap.auxStick);
+		
 		winchBrakeButton.whenPressed(new BrakeWinch());
 		
 		//calibrateEncoderButton.whenPressed(new EncoderCalibration(10, true));
