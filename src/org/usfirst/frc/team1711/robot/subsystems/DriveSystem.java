@@ -5,9 +5,11 @@ import org.usfirst.frc.team1711.robot.commands.drive.RawJoystickDrive;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -24,7 +26,7 @@ public class DriveSystem extends Subsystem
 	public WPI_TalonSRX rearLeftDrive;
 	public WPI_TalonSRX rearRightDrive;
 	
-	public ADXRS450_Gyro gyro;
+	public AHRS gyro;
 	
 	boolean secretMode = false;
 	
@@ -42,7 +44,7 @@ public class DriveSystem extends Subsystem
     	
     	mecanumDrive = new MecanumDrive(frontLeftDrive, rearLeftDrive, frontRightDrive, rearRightDrive);
     	
-    	gyro = new ADXRS450_Gyro();
+    	gyro = new AHRS(SerialPort.Port.kUSB);
     }
     
     public void cartesianDrive(double y, double x, double rotation)
@@ -134,7 +136,7 @@ public class DriveSystem extends Subsystem
     
     public void zeroGyro()
     {
-    	gyro.reset();
+    	gyro.zeroYaw();
     }
     
     public void printOutput(int setting)
