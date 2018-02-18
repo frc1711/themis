@@ -53,7 +53,7 @@ public class Robot extends IterativeRobot
 		liftControl = new PowerWinch(0);
 		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
 		// chooser.addObject("My Auto", new MyAutoCommand());
-	
+		//PUSH
 		//SmartDashboard.putData("Auto mode", chooser);
 	}
 
