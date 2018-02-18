@@ -139,6 +139,16 @@ public class DriveSystem extends Subsystem
     	gyro.zeroYaw();
     }
     
+    public boolean isGyroConnected()
+    {
+    	return gyro.isConnected();
+    }
+    
+    public boolean isGyroCalibrating()
+    {
+    	return gyro.isCalibrating();
+    }
+    
     public void printOutput(int setting)
     {
     	switch(setting)
