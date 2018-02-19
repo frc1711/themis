@@ -27,18 +27,32 @@ public class OrthoSwitchDrive extends Command {
     {
     	double x = -1 * OI.driveStick.getRawAxis(1);
     	double y = -1 * OI.driveStick.getRawAxis(0);
+    	double magnitude = OI.driveStick.getMagnitude();
+    	double angle = OI.driveStick.getDirectionRadians();
     	double stickRotation = OI.driveStick.getRawAxis(4);
-    	double gyroAngle = Robot.driveSystem.gyro.getAngle();
+    	double gyroAngle = 0; //Robot.driveSystem.gyro.getAngle();
     	
+    	System.out.println("angle: " + angle);
+    	System.out.println("mag: " + magnitude);
+    	System.out.println("rot: " + stickRotation);
+		
     	if(OI.driveStick.getMagnitude() > RobotMap.XBOX_DEADZONE || Math.abs(stickRotation) > 0.2)
     	{
     		if(isOrthoMode())
     		{
-    			 double rotationLockOutput = -1 * gyroAngle/50;
-    			 Robot.driveSystem.cartesianDrive(x, y, rotationLockOutput);
+    			//Robot.driveSystem.frontLeftDrive.setInverted(false);
+    			//Robot.driveSystem.rearRightDrive.setInverted(false);
+    			//double rotationLockOutput = -1 * gyroAngle/50;
+    			//Robot.driveSystem.cartesianDrive(x, y, stickRotation);
+    			Robot.driveSystem.polarDrive(angle, magnitude, stickRotation);
     		}
     		else
-    			Robot.driveSystem.cartesianDrive(x, y, stickRotation);
+    		{
+    			//Robot.driveSystem.frontLeftDrive.setInverted(true);
+    			//Robot.driveSystem.rearRightDrive.setInverted(true);
+    			//Robot.driveSystem.cartesianDrive(x, y, stickRotation);
+    			Robot.driveSystem.polarDrive(angle, magnitude, stickRotation);
+    		}
     	}
     	else
     		Robot.driveSystem.cartesianDrive(0, 0, 0);

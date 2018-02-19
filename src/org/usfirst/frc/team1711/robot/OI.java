@@ -17,8 +17,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI 
 {
-	public static Joystick driveStick;
-	public static Joystick auxStick;
+	public static Joystick driveStick = new Joystick(RobotMap.driveStick);
+	public static Joystick auxStick = new Joystick(RobotMap.auxStick);
 	
 	JoystickButton orthoButton = new JoystickButton(driveStick, 1);
 	JoystickButton winchBrakeButton = new JoystickButton(auxStick, 2);
@@ -33,10 +33,7 @@ public class OI
 	
 	public OI()
 	{
-		driveStick = new Joystick(RobotMap.driveStick);
-		auxStick = new Joystick(RobotMap.auxStick);
-		
-		winchBrakeButton.whenPressed(new BrakeWinch());
+//		winchBrakeButton.whenPressed(new BrakeWinch());
 		
 		//calibrateEncoderButton.whenPressed(new EncoderCalibration(10, true));
 		//calibrateLiftEncoder.whenPressed(new LiftEncoderCalibration(10));

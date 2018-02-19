@@ -1,7 +1,8 @@
 package org.usfirst.frc.team1711.robot.subsystems;
 
+import org.usfirst.frc.team1711.robot.Robot;
 import org.usfirst.frc.team1711.robot.RobotMap;
-import org.usfirst.frc.team1711.robot.commands.drive.RawJoystickDrive;
+import org.usfirst.frc.team1711.robot.commands.drive.OrthoSwitchDrive;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -28,8 +29,6 @@ public class DriveSystem extends Subsystem
 	
 	public AHRS gyro;
 	
-	boolean secretMode = false;
-	
 	boolean loadProfilingEnabled = false;
 	double[] loadProfile = {1, 1, 1, 1};
 	double[] rawAxleLoads = {1, 1, 1, 1};
@@ -45,8 +44,9 @@ public class DriveSystem extends Subsystem
     	rearLeftDrive = new WPI_TalonSRX(RobotMap.RLD);
     	rearRightDrive = new WPI_TalonSRX(RobotMap.RRD);
     	
-    	frontRightDrive.setInverted(true);
-    	rearLeftDrive.setInverted(true);
+//    	frontLeftDrive.setInverted(false);
+//    	frontRightDrive.setInverted(true);
+//		rearRightDrive.setInverted(true);
     	
     	mecanumDrive = new MecanumDrive(frontLeftDrive, rearLeftDrive, frontRightDrive, rearRightDrive);
     	
@@ -62,6 +62,9 @@ public class DriveSystem extends Subsystem
     {
      	double largestValue = 0;
      	
+     	if(angle < 0)
+     		angle += 2*Math.PI;
+     	
      	//this code is based on this pdf:
      	//http://thinktank.wpi.edu/resources/346/ControllingMecanumDrive.pdf
      	//and this repository by Jack Smith:
@@ -70,16 +73,20 @@ public class DriveSystem extends Subsystem
      	
      	double frontLeft = magnitude * (Math.sin(angle + Math.PI/4)) + rotation;
      	largestValue = Math.abs(frontLeft); //used to normalize the motor outputs to fit in the range [-1, 1]
+     	//System.out.println("FL: " + frontLeft);
      	
      	double frontRight = magnitude * (Math.sin(angle + Math.PI/4)) - rotation;
+     	//System.out.println("FR : " + frontRight);
      	if(Math.abs(frontRight) > largestValue)
      		largestValue = Math.abs(frontRight);
      	
      	double rearLeft = magnitude * (Math.sin(angle + Math.PI/4)) + rotation;
+     	//System.out.println("RL: " + rearLeft);
      	if(Math.abs(rearLeft) > largestValue)
      		largestValue = Math.abs(rearLeft);
      	
      	double rearRight = magnitude * (Math.sin(angle + Math.PI/4)) - rotation;
+     	//System.out.println("RR: " + rearRight);
      	if(Math.abs(rearRight) > largestValue)
      		largestValue = Math.abs(rearRight);
      	
@@ -103,10 +110,10 @@ public class DriveSystem extends Subsystem
      
      public void setMotorOutputs(double frontRight, double frontLeft, double rearRight, double rearLeft)
      {
-     	frontLeftDrive.set(ControlMode.PercentOutput, frontLeft);
-     	frontRightDrive.set(ControlMode.PercentOutput, frontRight);
-     	rearLeftDrive.set(ControlMode.PercentOutput, rearLeft);
-     	rearRightDrive.set(ControlMode.PercentOutput, rearRight);
+     	frontLeftDrive.set(frontLeft);
+     	frontRightDrive.set(frontRight);
+     	rearLeftDrive.set(rearLeft);
+     	rearRightDrive.set(rearRight);
      }
      
      public void enableLoadProfiling()

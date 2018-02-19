@@ -32,8 +32,8 @@ public class PowerWinch extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	if(Math.abs(OI.driveStick.getRawAxis(0)) > .2)
-    		Robot.lift.runLift(OI.driveStick.getRawAxis(0));
+    	if(Math.abs(OI.auxStick.getRawAxis(0)) > .2)
+    		Robot.lift.runLift(OI.auxStick.getRawAxis(0));
     	else
     		Robot.lift.runLift(0);
     }
