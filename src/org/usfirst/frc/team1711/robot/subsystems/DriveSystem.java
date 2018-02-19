@@ -10,6 +10,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.MotorSafety;
 import edu.wpi.first.wpilibj.MotorSafetyHelper;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -74,6 +75,8 @@ public class DriveSystem extends Subsystem implements MotorSafety
         wheelSpeeds = normalize(wheelSpeeds);
 
         setMotorOutputs(wheelSpeeds[0], wheelSpeeds[1], wheelSpeeds[2], wheelSpeeds[3]);
+        
+        safety.feed();
     }
     
     private double[] normalize(double[] speeds)
@@ -325,5 +328,35 @@ public class DriveSystem extends Subsystem implements MotorSafety
     {
         setDefaultCommand(new OrthoSwitchDrive());
     }
+
+	@Override
+	public boolean isAlive() {
+		return false;
+	}
+
+	@Override
+	public void stopMotor() 
+	{
+		stopRobot();
+		
+	}
+
+	@Override
+	public void setSafetyEnabled(boolean enabled) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isSafetyEnabled() 
+	{
+		return true;
+	}
+
+	@Override
+	public String getDescription() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
