@@ -10,6 +10,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.MotorSafetyHelper;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -20,12 +21,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveSystem extends Subsystem 
+public class DriveSystem extends Subsystem implements MotorSafety
 {
 	public WPI_TalonSRX frontLeftDrive;
 	public WPI_TalonSRX frontRightDrive;
 	public WPI_TalonSRX rearLeftDrive;
 	public WPI_TalonSRX rearRightDrive;
+	
+	public MotorSafetyHelper safety;
 	
 	public AHRS gyro;
 	
@@ -44,6 +47,8 @@ public class DriveSystem extends Subsystem
     	rearLeftDrive = new WPI_TalonSRX(RobotMap.RLD);
     	rearRightDrive = new WPI_TalonSRX(RobotMap.RRD);
     	
+    	safety = new MotorSafetyHelper(this);
+    	
 //    	frontLeftDrive.setInverted(false);
 //    	frontRightDrive.setInverted(true);
 //		rearRightDrive.setInverted(true);
@@ -56,6 +61,40 @@ public class DriveSystem extends Subsystem
     public void cartesianDrive(double y, double x, double rotation)
     {
     	mecanumDrive.driveCartesian(y, x, rotation);
+    }
+    
+    public void driveCartesian(double ySpeed, double xSpeed, double zRotation) 
+    {
+        double[] wheelSpeeds = new double[4];
+        wheelSpeeds[0] = xSpeed + ySpeed + zRotation;
+        wheelSpeeds[1] = xSpeed - ySpeed + zRotation;
+        wheelSpeeds[2] = -xSpeed + ySpeed + zRotation;
+        wheelSpeeds[3] = -xSpeed - ySpeed + zRotation;
+
+        wheelSpeeds = normalize(wheelSpeeds);
+
+        setMotorOutputs(wheelSpeeds[0], wheelSpeeds[1], wheelSpeeds[2], wheelSpeeds[3]);
+    }
+    
+    private double[] normalize(double[] speeds)
+    {
+    	double largestValue = 0;
+    	
+    	if(Math.abs(speeds[0]) > largestValue) { largestValue = Math.abs(speeds[0]);}
+    	if(Math.abs(speeds[1]) > largestValue) { largestValue = Math.abs(speeds[1]);}
+    	if(Math.abs(speeds[2]) > largestValue) { largestValue = Math.abs(speeds[2]);}
+    	if(Math.abs(speeds[3]) > largestValue) { largestValue = Math.abs(speeds[3]);}
+    	
+    	if(largestValue > 1)
+     	{
+     		speeds[0] /= largestValue;
+     		speeds[1] /= largestValue;
+     		speeds[2] /= largestValue;
+     		speeds[3] /= largestValue;
+     		//alex wasn't here
+     	}
+    	
+    	return speeds;
     }
     
     public void polarDrive(double angle, double magnitude, double rotation)
@@ -278,6 +317,9 @@ public class DriveSystem extends Subsystem
     		SmartDashboard.putNumber("Rear right", getRearRightEncoder());
     	}
     }
+    
+    public void setExpiration(double timeout) {};
+    public double getExpiration() {};
 
     public void initDefaultCommand() 
     {
