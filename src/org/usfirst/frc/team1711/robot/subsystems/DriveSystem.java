@@ -292,8 +292,8 @@ public class DriveSystem extends Subsystem
     	double rearLeft = getRearLeftEncoder();
     	double rearRight = getRearRightEncoder();
     	
-    	double sum = frontLeft + frontRight + rearLeft + rearRight;
-    	double average = sum / 4;
+    	double sum = frontLeft + frontRight;
+    	double average = sum / 2;
     	
     	return average;
     }
@@ -325,6 +325,14 @@ public class DriveSystem extends Subsystem
     public boolean isGyroCalibrating()
     {
     	return gyro.isCalibrating();
+    }
+    
+    public void driveStatic(double speed)
+    {
+    	frontLeftDrive.set(speed);
+    	frontRightDrive.set(speed);
+    	rearLeftDrive.set(speed);
+    	rearRightDrive.set(speed);
     }
     
     public void printOutput(int setting)

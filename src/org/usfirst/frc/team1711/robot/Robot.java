@@ -1,6 +1,10 @@
 
 package org.usfirst.frc.team1711.robot;
 
+import org.usfirst.frc.team1711.robot.commands.DriveExpelAuto;
+import org.usfirst.frc.team1711.robot.commands.TimedDrive;
+import org.usfirst.frc.team1711.robot.commands.auton.AutoDrive;
+import org.usfirst.frc.team1711.robot.commands.auton.TimedIntake;
 import org.usfirst.frc.team1711.robot.commands.drive.OrthoSwitchDrive;
 import org.usfirst.frc.team1711.robot.commands.drive.RawJoystickDrive;
 import org.usfirst.frc.team1711.robot.commands.lift.PowerWinch;
@@ -51,6 +55,7 @@ public class Robot extends IterativeRobot
 		intake = new IntakeSystem();
 		teleopDrive = new RawJoystickDrive();
 		liftControl = new PowerWinch();
+		autonomousCommand = new DriveExpelAuto();
 		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//PUSH

@@ -23,14 +23,14 @@ public class IntakeSystem extends Subsystem
 	
 	public void intake()
 	{
-		rightIntakeTalon.set(ControlMode.PercentOutput, 0.75);
-		leftIntakeTalon.set(ControlMode.PercentOutput, -0.5);
+		rightIntakeTalon.set(ControlMode.PercentOutput, -0.75);
+		leftIntakeTalon.set(ControlMode.PercentOutput, 0.5);
 	}
 	
 	public void expel()
 	{
-		rightIntakeTalon.set(ControlMode.PercentOutput, -0.75);
-		leftIntakeTalon.set(ControlMode.PercentOutput, 0.5);
+		rightIntakeTalon.set(ControlMode.PercentOutput, 0.75);
+		leftIntakeTalon.set(ControlMode.PercentOutput, -0.5);
 	}
 	
 	public void stop()

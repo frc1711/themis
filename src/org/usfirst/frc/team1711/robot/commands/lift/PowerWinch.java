@@ -32,12 +32,13 @@ public class PowerWinch extends Command
     {
     	if(Math.abs(OI.auxStick.getRawAxis(1)) > .1)
     	{
-    		if(!Robot.lift.getTopLimitSwitch() && OI.auxStick.getRawAxis(1) > 0)
+    		/*if(!Robot.lift.getTopLimitSwitch() && OI.auxStick.getRawAxis(1) > 0)
     			Robot.lift.runLift(OI.auxStick.getRawAxis(1));
     		else if(!Robot.lift.getBottomLimitSwitch() && OI.auxStick.getRawAxis(1) < 0)
     			Robot.lift.runLift(OI.auxStick.getRawAxis(1));
     		else
-    			Robot.lift.runLift(0);
+    			Robot.lift.runLift(0); */
+    		Robot.lift.runLift(OI.auxStick.getRawAxis(1));
     	}
     	else
     		Robot.lift.runLift(0);
