@@ -14,12 +14,10 @@ public class PowerWinch extends Command
 	boolean lockMode = true;
 	boolean lockActive;
 	int setPoint;
-	double power;
 
     public PowerWinch() 
     {
         requires(Robot.lift);
-        this.power = power;
     }
 
     // Called just before this Command runs the first time
@@ -33,9 +31,18 @@ public class PowerWinch extends Command
     protected void execute() 
     {
     	if(Math.abs(OI.auxStick.getRawAxis(1)) > .1)
-    		Robot.lift.runLift(OI.auxStick.getRawAxis(1));
+    	{
+    		if(!Robot.lift.getTopLimitSwitch() && OI.auxStick.getRawAxis(1) > 0)
+    			Robot.lift.runLift(OI.auxStick.getRawAxis(1));
+    		else if(!Robot.lift.getBottomLimitSwitch() && OI.auxStick.getRawAxis(1) < 0)
+    			Robot.lift.runLift(OI.auxStick.getRawAxis(1));
+    		else
+    			Robot.lift.runLift(0);
+    	}
     	else
     		Robot.lift.runLift(0);
+    	
+    	Robot.lift.runLift(OI.auxStick.getRawAxis(1));
     }
 
     // Make this return true when this Command no longer needs to run execute()
