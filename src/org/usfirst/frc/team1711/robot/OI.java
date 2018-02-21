@@ -6,6 +6,7 @@ import org.usfirst.frc.team1711.robot.commands.intake.Expel;
 import org.usfirst.frc.team1711.robot.commands.intake.Intake;
 import org.usfirst.frc.team1711.robot.commands.lift.BrakeWinch;
 import org.usfirst.frc.team1711.robot.commands.lift.PowerWinch;
+import org.usfirst.frc.team1711.robot.commands.lift.QuickLift;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -22,24 +23,23 @@ public class OI
 	
 	JoystickButton orthoButton = new JoystickButton(driveStick, 1);
 	JoystickButton winchBrakeButton = new JoystickButton(auxStick, 2);
-	//JoystickButton calibrateEncoderButton = new JoystickButton(RobotMap.driveStick, 3);
-	//JoystickButton calibrateLiftEncoder = new JoystickButton(RobotMap.driveStick, 4);
-	JoystickButton runLift = new JoystickButton(driveStick, 4);
-	JoystickButton runLiftDown = new JoystickButton(driveStick, 3);
+	JoystickButton calibrateEncoderButton = new JoystickButton(driveStick, 3);
+	JoystickButton calibrateLiftEncoder = new JoystickButton(driveStick, 4);
+	//JoystickButton runLift = new JoystickButton(driveStick, 4);
+	//JoystickButton runLiftDown = new JoystickButton(driveStick, 3);
 	
-	JoystickButton intakeButton = new JoystickButton(driveStick, 5);
-	JoystickButton expelButton = new JoystickButton(driveStick, 6);
+	JoystickButton intakeButton = new JoystickButton(auxStick, 5);
+	JoystickButton expelButton = new JoystickButton(auxStick, 6);
 	
 	
 	public OI()
 	{
 //		winchBrakeButton.whenPressed(new BrakeWinch());
 		
-		//calibrateEncoderButton.whenPressed(new EncoderCalibration(10, true));
-		//calibrateLiftEncoder.whenPressed(new LiftEncoderCalibration(10));
-		runLift.whileHeld(new PowerWinch(-1));
-		runLiftDown.whileHeld(new PowerWinch(1));
-		
+		calibrateEncoderButton.whenPressed(new EncoderCalibration(100, false));
+		calibrateLiftEncoder.whenPressed(new LiftEncoderCalibration(10));
+		//runLift.whileHeld(new QuickLift(0.5));
+		//runLiftDown.whileHeld(new QuickLift(-0.5));
 		intakeButton.whileHeld(new Intake());
 		expelButton.whileHeld(new Expel());
 	}

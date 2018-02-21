@@ -2,6 +2,7 @@
 package org.usfirst.frc.team1711.robot;
 
 import org.usfirst.frc.team1711.robot.commands.drive.OrthoSwitchDrive;
+import org.usfirst.frc.team1711.robot.commands.drive.RawJoystickDrive;
 import org.usfirst.frc.team1711.robot.commands.lift.PowerWinch;
 import org.usfirst.frc.team1711.robot.subsystems.DriveSystem;
 import org.usfirst.frc.team1711.robot.subsystems.IntakeSystem;
@@ -48,12 +49,14 @@ public class Robot extends IterativeRobot
 		driveSystem = new DriveSystem();
 		lift = new Lift();
 		intake = new IntakeSystem();
-		teleopDrive = new OrthoSwitchDrive();
-		liftControl = new PowerWinch(0);
+		teleopDrive = new RawJoystickDrive();
+		liftControl = new PowerWinch();
 		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//PUSH
 		//SmartDashboard.putData("Auto mode", chooser);
+		
+		Robot.driveSystem.setLoadProfile(.7, .7, 1, 1);
 	}
 
 	/**
@@ -131,7 +134,7 @@ public class Robot extends IterativeRobot
 	public void teleopPeriodic() 
 	{
 		Scheduler.getInstance().run();
-		driveSystem.printOutput(0);
+		driveSystem.printOutput(1);
 		lift.printOutput(0);
 	}
 

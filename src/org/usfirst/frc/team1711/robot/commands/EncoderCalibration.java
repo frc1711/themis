@@ -26,17 +26,17 @@ public class EncoderCalibration extends Command
     protected void initialize() 
     {
     	Robot.driveSystem.stopRobot();
-    	Robot.driveSystem.zeroGyro();
+    	//Robot.driveSystem.zeroGyro();
     	Robot.driveSystem.zeroEncoders();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	gyroAngle = Robot.driveSystem.getGyroAngle();
+    	//gyroAngle = Robot.driveSystem.getGyroAngle();
     	averageEncoderPulses = Robot.driveSystem.getAverageEncoderValue();
     	
-    	double correctedRotation = -1 * gyroAngle/50;
+    	double correctedRotation = 0;//-1 * gyroAngle/50;
     	
     	if(gyroCorrected)
     		Robot.driveSystem.cartesianDrive(0.5, 0, correctedRotation);

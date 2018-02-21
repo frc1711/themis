@@ -3,7 +3,9 @@ package org.usfirst.frc.team1711.robot.subsystems;
 import org.usfirst.frc.team1711.robot.Robot;
 import org.usfirst.frc.team1711.robot.RobotMap;
 import org.usfirst.frc.team1711.robot.commands.drive.OrthoSwitchDrive;
+import org.usfirst.frc.team1711.robot.commands.drive.RawJoystickDrive;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
@@ -22,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveSystem extends Subsystem implements MotorSafety
+public class DriveSystem extends Subsystem
 {
 	public WPI_TalonSRX frontLeftDrive;
 	public WPI_TalonSRX frontRightDrive;
@@ -33,13 +35,17 @@ public class DriveSystem extends Subsystem implements MotorSafety
 	
 	public AHRS gyro;
 	
-	boolean loadProfilingEnabled = false;
+	boolean loadProfilingEnabled = true;
 	double[] loadProfile = {1, 1, 1, 1};
 	double[] rawAxleLoads = {1, 1, 1, 1};
 	
 	boolean secretMode = false;
 	
 	MecanumDrive mecanumDrive;
+	DifferentialDrive robotDrive;
+	
+	SpeedControllerGroup leftSideDrive;
+	SpeedControllerGroup rightSideDrive;
 	
     public DriveSystem()
     {
@@ -48,20 +54,22 @@ public class DriveSystem extends Subsystem implements MotorSafety
     	rearLeftDrive = new WPI_TalonSRX(RobotMap.RLD);
     	rearRightDrive = new WPI_TalonSRX(RobotMap.RRD);
     	
-    	safety = new MotorSafetyHelper(this);
-    	
 //    	frontLeftDrive.setInverted(false);
-//    	frontRightDrive.setInverted(true);
-//		rearRightDrive.setInverted(true);
+    	leftSideDrive = new SpeedControllerGroup(frontLeftDrive, rearLeftDrive);
+    	rightSideDrive = new SpeedControllerGroup(frontRightDrive, rearRightDrive);
+    	robotDrive = new DifferentialDrive(leftSideDrive, rightSideDrive);
     	
-    	mecanumDrive = new MecanumDrive(frontLeftDrive, rearLeftDrive, frontRightDrive, rearRightDrive);
-    	
-    	gyro = new AHRS(SerialPort.Port.kUSB);
+/*    	frontLeftDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+    	rearLeftDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+    	frontLeftDrive.setSensorPhase(true);
+    	rearLeftDrive.setSensorPhase(true);
+    	*/
+ //   	gyro = new AHRS(SerialPort.Port.kUSB);
     }
     
     public void cartesianDrive(double y, double x, double rotation)
     {
-    	mecanumDrive.driveCartesian(y, x, rotation);
+    	//mecanumDrive.driveCartesian(y, x, rotation);
     }
     
     public void driveCartesian(double ySpeed, double xSpeed, double zRotation) 
@@ -73,10 +81,9 @@ public class DriveSystem extends Subsystem implements MotorSafety
         wheelSpeeds[3] = -xSpeed - ySpeed + zRotation;
 
         wheelSpeeds = normalize(wheelSpeeds);
+        System.out.println(wheelSpeeds[0]);
 
         setMotorOutputs(wheelSpeeds[0], wheelSpeeds[1], wheelSpeeds[2], wheelSpeeds[3]);
-        
-        safety.feed();
     }
     
     private double[] normalize(double[] speeds)
@@ -152,10 +159,20 @@ public class DriveSystem extends Subsystem implements MotorSafety
      
      public void setMotorOutputs(double frontRight, double frontLeft, double rearRight, double rearLeft)
      {
-     	frontLeftDrive.set(frontLeft);
-     	frontRightDrive.set(frontRight);
-     	rearLeftDrive.set(rearLeft);
-     	rearRightDrive.set(rearRight);
+    	if(loadProfilingEnabled)
+    	{
+    		frontLeftDrive.set(frontLeft * loadProfile[0]);
+         	frontRightDrive.set(frontRight * loadProfile[1]);
+         	rearLeftDrive.set(rearLeft * loadProfile[2]);
+         	rearRightDrive.set(rearRight * loadProfile[3]);
+    	}
+    	else
+    	{
+    		frontLeftDrive.set(frontLeft);
+         	frontRightDrive.set(frontRight);
+         	rearLeftDrive.set(rearLeft);
+         	rearRightDrive.set(rearRight);
+    	}
      }
      
      public void enableLoadProfiling()
@@ -213,6 +230,11 @@ public class DriveSystem extends Subsystem implements MotorSafety
     	rearRightDrive.set(0); 
     }
     
+    public void arcadeDrive(double speed, double rotation)
+    {
+    	robotDrive.arcadeDrive(speed, rotation);
+    }
+    
     public void turn(double angle, double speed)
     {
     	//need to know pos/neg right/left
@@ -242,7 +264,8 @@ public class DriveSystem extends Subsystem implements MotorSafety
     
     public double getFrontLeftEncoder()
     {
-    	return frontLeftDrive.getSensorCollection().getQuadraturePosition();
+    	//this is jury rigged but i don't give a shit
+    	return -1 * frontLeftDrive.getSensorCollection().getQuadraturePosition();
     }
     
     public double getFrontRightEncoder()
@@ -252,7 +275,9 @@ public class DriveSystem extends Subsystem implements MotorSafety
     
     public double getRearLeftEncoder()
     {
-    	return rearLeftDrive.getSensorCollection().getQuadraturePosition();
+    	//also jury rigged
+    	//pls give programmers more testing time thx
+    	return -1 * rearLeftDrive.getSensorCollection().getQuadraturePosition();
     }
     
     public double getRearRightEncoder()
@@ -320,43 +345,10 @@ public class DriveSystem extends Subsystem implements MotorSafety
     		SmartDashboard.putNumber("Rear right", getRearRightEncoder());
     	}
     }
-    
-    public void setExpiration(double timeout) {};
-    public double getExpiration() {};
 
     public void initDefaultCommand() 
     {
-        setDefaultCommand(new OrthoSwitchDrive());
+        setDefaultCommand(new RawJoystickDrive());
     }
-
-	@Override
-	public boolean isAlive() {
-		return false;
-	}
-
-	@Override
-	public void stopMotor() 
-	{
-		stopRobot();
-		
-	}
-
-	@Override
-	public void setSafetyEnabled(boolean enabled) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean isSafetyEnabled() 
-	{
-		return true;
-	}
-
-	@Override
-	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
 

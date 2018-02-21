@@ -16,7 +16,7 @@ public class RobotMap
 	public static int FRD = 5;
 	public static int FLD = 1;
 	public static int RRD = 8;
-	public static int RLD = 2;
+	public static int RLD = 2; 
 	//other motors
 	public static int liftMotor = 9;
 	public static int otherLiftMotor = 0;
