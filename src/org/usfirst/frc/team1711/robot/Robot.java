@@ -1,7 +1,10 @@
 
 package org.usfirst.frc.team1711.robot;
 
-import org.usfirst.frc.team1711.robot.commands.auton.GyroDriveAuton;
+import org.usfirst.frc.team1711.robot.commands.DriveExpelAuto;
+import org.usfirst.frc.team1711.robot.commands.TimedDrive;
+import org.usfirst.frc.team1711.robot.commands.auton.AutoDrive;
+import org.usfirst.frc.team1711.robot.commands.auton.TimedIntake;
 import org.usfirst.frc.team1711.robot.commands.drive.OrthoSwitchDrive;
 import org.usfirst.frc.team1711.robot.commands.drive.RawJoystickDrive;
 import org.usfirst.frc.team1711.robot.commands.lift.PowerWinch;
@@ -9,12 +12,10 @@ import org.usfirst.frc.team1711.robot.subsystems.DriveSystem;
 import org.usfirst.frc.team1711.robot.subsystems.IntakeSystem;
 import org.usfirst.frc.team1711.robot.subsystems.Lift;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -52,12 +53,15 @@ public class Robot extends IterativeRobot
 		driveSystem = new DriveSystem();
 		lift = new Lift();
 		intake = new IntakeSystem();
-		teleopDrive = new OrthoSwitchDrive();
+		teleopDrive = new RawJoystickDrive();
 		liftControl = new PowerWinch();
+		autonomousCommand = new DriveExpelAuto();
 		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
 		// chooser.addObject("My Auto", new MyAutoCommand());
-	
-		SmartDashboard.putData("Auto mode", chooser);
+		//PUSH
+		//SmartDashboard.putData("Auto mode", chooser);
+		
+		Robot.driveSystem.setLoadProfile(.7, .7, 1, 1);
 	}
 
 	/**
@@ -66,7 +70,6 @@ public class Robot extends IterativeRobot
 	@Override
 	public void disabledInit() 
 	{
-		liftControl.cancel();
 	}
 
 	@Override
@@ -136,6 +139,8 @@ public class Robot extends IterativeRobot
 	public void teleopPeriodic() 
 	{
 		Scheduler.getInstance().run();
+		driveSystem.printOutput(1);
+		lift.printOutput(0);
 	}
 
 	/**

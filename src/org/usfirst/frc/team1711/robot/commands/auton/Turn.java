@@ -7,44 +7,38 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class GyroDriveAuton extends Command 
-{
-	
-	int angle;
+public class Turn extends Command {
 
-    public GyroDriveAuton(int angle) 
+	double desiredTurnAngle;
+	double robotAngle;
+	
+    public Turn(double angle) 
     {
         requires(Robot.driveSystem);
-        this.angle = angle;
+        this.desiredTurnAngle = angle;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() 
     {
+    	Robot.driveSystem.stopRobot();
+    	Robot.driveSystem.zeroGyro();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	if(angle > 0)
-    	{
-    		if(Robot.driveSystem.gyro.getAngle() < angle)
-    			Robot.driveSystem.turn(angle, 0.5);
-    		Robot.driveSystem.stopRobot();
-    	}
-    	else if(angle < 0)
-    	{
-    		if(Robot.driveSystem.gyro.getAngle() > angle)
-    			Robot.driveSystem.turn(angle, 0.5);
-    		Robot.driveSystem.stopRobot();
-    	}
-    	
+    	robotAngle = Robot.driveSystem.getGyroAngle();
+    	Robot.driveSystem.turn(desiredTurnAngle, 0.3);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() 
     {
-        return false;
+    	if(!(desiredTurnAngle > 0 && robotAngle < desiredTurnAngle) || !(desiredTurnAngle < 0 && robotAngle > desiredTurnAngle))
+    		return true;
+    	else
+    		return false;
     }
 
     // Called once after isFinished returns true

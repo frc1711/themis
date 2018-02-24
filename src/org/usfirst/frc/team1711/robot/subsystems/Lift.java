@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -39,11 +40,12 @@ public class Lift extends Subsystem
     {
     	//percent output has a range of -1 to 1
     	liftTalon.set(ControlMode.PercentOutput, speed);
-    	otherLiftTalon.set(ControlMode.PercentOutput, speed);
+    	otherLiftTalon.set(ControlMode.Follower, RobotMap.liftMotor);
     }
     
-    public void setPositionMode(int setPoint)
+    public void setPositionMode(double setPoint)
     {
+    	//the set point is in native rotation units
     	liftTalon.set(ControlMode.Position, setPoint);
     }
     
@@ -71,10 +73,36 @@ public class Lift extends Subsystem
     {
     	return bottomLimitSwitch.get();
     }
+    
+    public double getLiftEncoder()
+    {
+    	return liftTalon.getSensorCollection().getQuadraturePosition();
+    }
+    
+    public void zeroLiftEncoder()
+    {
+    	//second number is timeout in ms
+    	liftTalon.getSensorCollection().setQuadraturePosition(0, 15);
+    }
+    
+    public void printOutput(int setting)
+    {
+    	switch(setting)
+    	{
+    	case 0: 
+    		//System.out.println("Lift encoder: " + getLiftEncoder());
+    		SmartDashboard.putNumber("Lift encoder", getLiftEncoder());
+    	case 1:
+    		//System.out.println("Motor 1 current: " + liftTalon.getOutputCurrent());
+    		//System.out.println("Motor 2 current: " + otherLiftTalon.getOutputCurrent());
+    		SmartDashboard.putNumber("Motor 1 current", liftTalon.getOutputCurrent());
+    		SmartDashboard.putNumber("Motor 2 current", otherLiftTalon.getOutputCurrent());
+    	}
+    }
 
     public void initDefaultCommand() 
     {
-        setDefaultCommand(new PowerWinch());
+    	setDefaultCommand(new PowerWinch());
     }
 }
 

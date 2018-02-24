@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1711.robot.commands.lift;
 
+import org.usfirst.frc.team1711.robot.OI;
 import org.usfirst.frc.team1711.robot.Robot;
 import org.usfirst.frc.team1711.robot.RobotMap;
 
@@ -23,43 +24,26 @@ public class PowerWinch extends Command
     protected void initialize() 
     {
     	lockActive = false;
+    	Robot.lift.runLift(0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-/*    	if(lockMode && Math.abs(RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis)) < 0.1)
+    	if(Math.abs(OI.auxStick.getRawAxis(1)) > .1)
     	{
-    		setPoint = Robot.lift.getLiftPosition();
-    		Robot.lift.setPositionMode(setPoint);
-    		lockActive = true;
+    		/*if(!Robot.lift.getTopLimitSwitch() && OI.auxStick.getRawAxis(1) > 0)
+    			Robot.lift.runLift(OI.auxStick.getRawAxis(1));
+    		else if(!Robot.lift.getBottomLimitSwitch() && OI.auxStick.getRawAxis(1) < 0)
+    			Robot.lift.runLift(OI.auxStick.getRawAxis(1));
+    		else
+    			Robot.lift.runLift(0); */
+    		Robot.lift.runLift(OI.auxStick.getRawAxis(1));
     	}
-    	
     	else
-    	{
-    		lockActive = false;
-    		
-    		if((RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis) > 0.1) && !Robot.lift.getTopLimitSwitch())
-    		{
-    			Robot.lift.runLift(RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis));
-    		}
-    		
-    		else if((RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis) < -0.1) && !Robot.lift.getBottomLimitSwitch())
-    		{
-    			Robot.lift.runLift(RobotMap.auxStick.getRawAxis(RobotMap.throttleAxis));
-    		}
-    	} */
-    	if(!Robot.lift.getTopLimitSwitch() && RobotMap.auxStick.getRawAxis(1) < 0)
-			Robot.lift.runLift(0);
-		else if(!Robot.lift.getBottomLimitSwitch() && RobotMap.auxStick.getRawAxis(1) > 0)
-    		Robot.lift.runLift(0); 
-		else
-		{
-			if(Math.abs(RobotMap.auxStick.getRawAxis(1)) > 0.1)
-	    		Robot.lift.runLift(RobotMap.auxStick.getRawAxis(1));
-	    	else
-	    		Robot.lift.runLift(0);
-		}
+    		Robot.lift.runLift(0);
+    	
+    	Robot.lift.runLift(OI.auxStick.getRawAxis(1));
     }
 
     // Make this return true when this Command no longer needs to run execute()

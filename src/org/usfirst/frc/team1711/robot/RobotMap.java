@@ -13,16 +13,16 @@ public class RobotMap
 {
 	//MOTORS
 	//drive motors
-	public static int FRD = 2;
-	public static int FLD = 3;
-	public static int RRD = 0;
-	public static int RLD = 1;
+	public static int FRD = 5;
+	public static int FLD = 1;
+	public static int RRD = 8;
+	public static int RLD = 2; 
 	//other motors
-	public static int liftMotor = 0;
-	public static int otherLiftMotor = 1;
-	public static int brakeMotor = 2;
-	public static int rightIntake = 6;
-	public static int leftIntake = 7; 
+	public static int liftMotor = 9;
+	public static int otherLiftMotor = 0;
+	public static int brakeMotor = 12;
+	public static int rightIntake = 3;
+	public static int leftIntake = 4; 
 	
 	//placeholder numbers
 	public static int throttleAxis = 1;
@@ -35,15 +35,14 @@ public class RobotMap
 	public static int bottomLiftSwitch = 1;
 	public static int brakeSwitch = 2;
 	
-	public static Joystick driveStick;
-	public static Joystick auxStick;
+	public static int driveStick = 0;
+	public static int auxStick = 1;
 	
 	//constants
 	public static final double XBOX_DEADZONE = 0.25;
 	
 	public void init()
 	{
-		driveStick = new Joystick(0);
-		auxStick = new Joystick(1);
+		
 	}
 }
