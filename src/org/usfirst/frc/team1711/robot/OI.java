@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1711.robot;
 
-import org.usfirst.frc.team1711.robot.commands.EncoderCalibration;
 import org.usfirst.frc.team1711.robot.commands.LiftEncoderCalibration;
 import org.usfirst.frc.team1711.robot.commands.intake.Expel;
 import org.usfirst.frc.team1711.robot.commands.intake.Intake;
@@ -32,7 +31,6 @@ public class OI
 	{
 //		winchBrakeButton.whenPressed(new BrakeWinch());
 		
-		calibrateEncoderButton.whenPressed(new EncoderCalibration(100, false));
 		calibrateLiftEncoder.whenPressed(new LiftEncoderCalibration(10));
 		intakeButton.whileHeld(new Intake());
 		expelButton.whileHeld(new Expel());
