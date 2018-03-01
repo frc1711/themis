@@ -1,9 +1,9 @@
 
 package org.usfirst.frc.team1711.robot;
 
-import org.usfirst.frc.team1711.robot.commands.DriveExpelAuto;
-import org.usfirst.frc.team1711.robot.commands.TimedDrive;
 import org.usfirst.frc.team1711.robot.commands.auton.AutoDrive;
+import org.usfirst.frc.team1711.robot.commands.auton.DriveExpelAuto;
+import org.usfirst.frc.team1711.robot.commands.auton.TimedDrive;
 import org.usfirst.frc.team1711.robot.commands.auton.TimedIntake;
 import org.usfirst.frc.team1711.robot.commands.drive.OrthoSwitchDrive;
 import org.usfirst.frc.team1711.robot.commands.drive.RawJoystickDrive;
@@ -12,7 +12,7 @@ import org.usfirst.frc.team1711.robot.subsystems.DriveSystem;
 import org.usfirst.frc.team1711.robot.subsystems.IntakeSystem;
 import org.usfirst.frc.team1711.robot.subsystems.Lift;
 
-
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -58,10 +58,9 @@ public class Robot extends IterativeRobot
 		autonomousCommand = new DriveExpelAuto();
 		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		//PUSH
 		//SmartDashboard.putData("Auto mode", chooser);
 		
-		Robot.driveSystem.setLoadProfile(.7, .7, 1, 1);
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	/**

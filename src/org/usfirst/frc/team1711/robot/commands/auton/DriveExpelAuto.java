@@ -1,31 +1,23 @@
-package org.usfirst.frc.team1711.robot.commands;
-
-import org.usfirst.frc.team1711.robot.Robot;
-import org.usfirst.frc.team1711.robot.commands.auton.AutoDrive;
-import org.usfirst.frc.team1711.robot.commands.auton.Turn;
+package org.usfirst.frc.team1711.robot.commands.auton;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class LongSwitch extends CommandGroup {
+public class DriveExpelAuto extends CommandGroup {
 
-    public LongSwitch() {
+    public DriveExpelAuto() {
+    	addSequential(new AutoDrive(100));
+    	addParallel(new TimedLift(1, 0.25));
+    	addSequential(new TimedExpel(1));
+    	addSequential(new TimedLift(1, -0.25));
+    	addSequential(new TimedIntake(1));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
 
-    	addParallel(new TimedLift(10, .5));
-    	addParallel(new AutoDrive(10));
-    	addSequential(new Turn(10));
-    	addSequential(new AutoDrive(10));
-    	addSequential(new Turn(10));
-    	addSequential(new AutoDrive(10));
-    	addSequential(new TimedExpel(10));
-    	//drive backwards
-    	
         // To run multiple commands at the same time,
         // use addParallel()
         // e.g. addParallel(new Command1());

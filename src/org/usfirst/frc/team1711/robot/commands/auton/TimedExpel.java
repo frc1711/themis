@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1711.robot.commands;
+package org.usfirst.frc.team1711.robot.commands.auton;
 
 import org.usfirst.frc.team1711.robot.Robot;
 
@@ -7,33 +7,31 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 /**
  *
  */
-public class TimedLift extends TimedCommand {
-	double speed;
+public class TimedExpel extends TimedCommand {
 
-    public TimedLift(double timeout, double speed) {
+    public TimedExpel(double timeout) {
         super(timeout);
         requires(Robot.lift);
-        this.speed = speed;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.lift.runLift(0);
+    	Robot.intake.stop();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lift.runLift(speed);
+    	Robot.intake.expel();
     }
 
     // Called once after timeout
     protected void end() {
-    	Robot.lift.runLift(0);
+    	Robot.intake.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.lift.runLift(0);
+    	Robot.intake.stop();
     }
 }
