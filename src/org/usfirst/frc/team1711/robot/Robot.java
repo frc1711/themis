@@ -35,6 +35,8 @@ public class Robot extends IterativeRobot
 	public static Lift lift;
 	public static IntakeSystem intake;
 	public static OI oi;
+	
+	boolean chooserEnabled = true;
 
 	Command autonomousCommand;
 	Command teleopDrive;
@@ -57,8 +59,12 @@ public class Robot extends IterativeRobot
 		liftControl = new PowerWinch();
 		autonomousCommand = new DriveExpelAuto();
 		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		//SmartDashboard.putData("Auto mode", chooser);
+		
+		if(chooserEnabled)
+		{
+			chooser.addObject("Drive Expel", new DriveExpelAuto());
+			SmartDashboard.putData("Auto mode", chooser);
+		}
 		
 		CameraServer.getInstance().startAutomaticCapture();
 	}
@@ -91,17 +97,8 @@ public class Robot extends IterativeRobot
 	@Override
 	public void autonomousInit() 
 	{
-		//autonomousCommand = chooser.getSelected();
-		
-//		autonomousCommand = new GyroDriveAuton(90);
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
+		if(chooserEnabled)
+			autonomousCommand = chooser.getSelected();
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
