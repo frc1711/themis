@@ -122,7 +122,7 @@ public class Robot extends IterativeRobot
 		
 		if(chooserEnabled)
 		{
-			autonomousCommand = chooser.getSelected();
+			autonomousCommand = chooser.getSelected(); //commit pls
 			
 			if(side.getSelected().equals("right")&& field[0] == 'L')
 				autonomousCommand = new AutoDrive(75, 0.25);
