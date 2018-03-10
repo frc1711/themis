@@ -13,13 +13,15 @@ public class AutoDrive extends Command
 	double desiredDistancePulses;
 	double encoderPulseAverage;
 	double gyroAngle;
+	double speed;
 
-    public AutoDrive(double distance) 
+    public AutoDrive(double distance, double speed) 
     {
         requires(Robot.driveSystem);
         this.desiredDistanceInches = distance;
         //convert inches into pulses
         desiredDistancePulses = desiredDistanceInches * 262;
+        this.speed = speed;
     }
 
     // Called just before this Command runs the first time
@@ -39,7 +41,7 @@ public class AutoDrive extends Command
 //    	gyroAngle = Robot.driveSystem.getGyroAngle();
 //    	double gyroCorrection = -1 * gyroAngle/50;
     	//we need more math if we wanna do anything other than go forward
-    	Robot.driveSystem.driveStatic(-0.25);
+    	Robot.driveSystem.driveStatic(-speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

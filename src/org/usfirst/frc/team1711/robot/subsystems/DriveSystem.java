@@ -74,19 +74,19 @@ public class DriveSystem extends Subsystem
     		stopRobot();
     }
     
-    private void turnRight(double speed)
+    public void turnRight(double speed)
     {
     	frontLeftDrive.set(-speed);
-    	frontRightDrive.set(speed);
+    	frontRightDrive.set(-speed);
     	rearLeftDrive.set(-speed);
     	rearRightDrive.set(-speed); 
     }
     
     public void turnLeft(double speed)
     {
-    	frontLeftDrive.set(-speed);
+    	frontLeftDrive.set(speed);
     	frontRightDrive.set(speed);
-    	rearLeftDrive.set(-speed);
+    	rearLeftDrive.set(speed);
     	rearRightDrive.set(speed); 
     }
     
