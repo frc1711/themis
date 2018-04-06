@@ -104,25 +104,28 @@ public class Robot extends IterativeRobot
 		lift.zeroLiftEncoder();
 		
 		String gameMessage = DriverStation.getInstance().getGameSpecificMessage();
-		char[] field = gameMessage.toCharArray();
 		
-		if(autonPot.getAverageVoltage() <= 0.6)
-			autonomousCommand = new AutoDrive(100, 0.25);
-		else
+		if(!gameMessage.equals(""))
 		{
-			autonomousCommand = new MediumSwitch(field[0]);
-		}
-		
-		testMode = false;
-		
-		if(testMode)
-		{
-			if(field[1] == 'L')
-				autonomousCommand = new ShortScale(field[1]);
+			char[] field = gameMessage.toCharArray();
+			
+			if(autonPot.getAverageVoltage() <= 0.6)
+				autonomousCommand = new AutoDrive(100, 0.25);
 			else
-				autonomousCommand = new AutoDrive(75, 0.25);
-				//autonomousCommand = new LongScale(field[0]);
+			{
+				autonomousCommand = new MediumSwitch(field[0]);
+			}
+			
+			testMode = false;
+			
+			if(testMode)
+			{
+				if(field[1] == 'L')
+					autonomousCommand = new ShortScale(field[1]);
+			}
 		}
+		else
+			autonomousCommand = new AutoDrive(75, 0.25);
 		// schedule the autonomous command (example)
 		brakeSystem.setServo(70);
 		if (autonomousCommand != null)
