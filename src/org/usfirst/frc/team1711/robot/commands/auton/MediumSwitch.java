@@ -13,7 +13,8 @@ public class MediumSwitch extends CommandGroup {
 
 	char side;
 	
-    public MediumSwitch(char side) {
+    public MediumSwitch(char side) 
+    {
     	this.side = side;
     	System.out.println(side);
     	

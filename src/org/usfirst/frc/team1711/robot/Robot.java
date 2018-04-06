@@ -2,9 +2,6 @@
 package org.usfirst.frc.team1711.robot;
 
 import org.usfirst.frc.team1711.robot.commands.auton.AutoDrive;
-import org.usfirst.frc.team1711.robot.commands.auton.DoNothingAuton;
-import org.usfirst.frc.team1711.robot.commands.auton.DriveExpelAuto;
-import org.usfirst.frc.team1711.robot.commands.auton.LongScale;
 import org.usfirst.frc.team1711.robot.commands.auton.MediumSwitch;
 import org.usfirst.frc.team1711.robot.commands.auton.ShortScale;
 import org.usfirst.frc.team1711.robot.commands.drive.RawJoystickDrive;
@@ -21,8 +18,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -50,8 +45,6 @@ public class Robot extends IterativeRobot
 	Command autonomousCommand;
 	Command teleopDrive;
 	Command liftControl;
-	SendableChooser<Command> chooser;
-	SendableChooser<String> side;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -70,27 +63,11 @@ public class Robot extends IterativeRobot
 		liftControl = new PowerWinch();
 		autonomousCommand = new AutoDrive(80, 0.25);
 		chooserEnabled = false;
-		chooser = new SendableChooser<>();
-		side = new SendableChooser<>();
 //		autoSwitch = new DigitalInput(RobotMap.autoSwitch);
 		autonPot = new AnalogInput(RobotMap.autonPot);
 		//autonomousCommand = new DriveExpelAuto();
 		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
-		
-//		brakeSystem.setServo(40);
-		
-		if(chooserEnabled)
-		{
-			side.addDefault("Right", "right");
-			side.addObject("Left", "left");
-			
-			chooser.addDefault("Drive", new AutoDrive(80, 0.25));
-			chooser.addObject("Drive Expel", new DriveExpelAuto());
-			chooser.addObject("Do nothing", new DoNothingAuton());
-			
-			SmartDashboard.putData("Auto mode", chooser);
-			SmartDashboard.putData("Side selector", side); 
-		} 
+		 
 	}
 
 	/**
@@ -128,20 +105,6 @@ public class Robot extends IterativeRobot
 		
 		String gameMessage = DriverStation.getInstance().getGameSpecificMessage();
 		char[] field = gameMessage.toCharArray();
-		
-		if(chooserEnabled)
-		{
-			autonomousCommand = chooser.getSelected(); //commit pls
-			
-			if(side.getSelected().equals("right")&& field[0] == 'L')
-				autonomousCommand = new AutoDrive(75, 0.25);
-			else if(side.getSelected().equals("left") && field[0] == 'R')
-				autonomousCommand = new AutoDrive(75, 0.25);
-			if(field[0] == 'R')
-				autonomousCommand = new MediumSwitch('R');
-			else if(field[0] == 'L')
-				autonomousCommand = new MediumSwitch('L'); 
-		}
 		
 		if(autonPot.getAverageVoltage() <= 0.6)
 			autonomousCommand = new AutoDrive(100, 0.25);
