@@ -31,7 +31,9 @@ public class AutoDrive extends Command
     	Robot.driveSystem.zeroEncoders();
     	Robot.driveSystem.frontLeftDrive.setInverted(true);
     	Robot.driveSystem.rearLeftDrive.setInverted(true);
- //   	Robot.driveSystem.zeroGyro();
+    	Robot.driveSystem.zeroGyro();
+    	if(desiredDistanceInches > 0)
+    		speed *= -1;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -40,15 +42,20 @@ public class AutoDrive extends Command
     	encoderPulseAverage = Robot.driveSystem.getAverageEncoderValue();
 //    	gyroAngle = Robot.driveSystem.getGyroAngle();
 //    	double gyroCorrection = -1 * gyroAngle/50;
-    	//we need more math if we wanna do anything other than go forward
-    	Robot.driveSystem.driveStatic(-speed);
+    	//we need more math if we wanna do anything other than go forward)
+    	if(desiredDistancePulses - encoderPulseAverage < 500)
+    		Robot.driveSystem.driveStatic(0.5 * speed);
+    	else
+    		Robot.driveSystem.driveStatic(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() 
     {
     	//currently only supports forward motion
-    	if(encoderPulseAverage < desiredDistancePulses)
+    	if(desiredDistancePulses > 0 && encoderPulseAverage < desiredDistancePulses)
+    		return false;
+    	else if(desiredDistancePulses < 0 && encoderPulseAverage > desiredDistancePulses)
     		return false;
     	else
     		return true;

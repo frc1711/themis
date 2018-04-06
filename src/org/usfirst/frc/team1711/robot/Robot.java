@@ -4,9 +4,12 @@ package org.usfirst.frc.team1711.robot;
 import org.usfirst.frc.team1711.robot.commands.auton.AutoDrive;
 import org.usfirst.frc.team1711.robot.commands.auton.DoNothingAuton;
 import org.usfirst.frc.team1711.robot.commands.auton.DriveExpelAuto;
+import org.usfirst.frc.team1711.robot.commands.auton.LongScale;
 import org.usfirst.frc.team1711.robot.commands.auton.MediumSwitch;
+import org.usfirst.frc.team1711.robot.commands.auton.ShortScale;
 import org.usfirst.frc.team1711.robot.commands.drive.RawJoystickDrive;
 import org.usfirst.frc.team1711.robot.commands.lift.PowerWinch;
+import org.usfirst.frc.team1711.robot.subsystems.Brake;
 import org.usfirst.frc.team1711.robot.subsystems.DriveSystem;
 import org.usfirst.frc.team1711.robot.subsystems.IntakeSystem;
 import org.usfirst.frc.team1711.robot.subsystems.Lift;
@@ -36,11 +39,13 @@ public class Robot extends IterativeRobot
 	public static DriveSystem driveSystem;
 	public static Lift lift;
 	public static IntakeSystem intake;
+	public static Brake brakeSystem;
 	public static DigitalInput autoSwitch;
 	public static AnalogInput autonPot;
 	public static OI oi;
 	
 	boolean chooserEnabled;
+	boolean testMode = false;
 
 	Command autonomousCommand;
 	Command teleopDrive;
@@ -60,6 +65,7 @@ public class Robot extends IterativeRobot
 		driveSystem = new DriveSystem();
 		lift = new Lift();
 		intake = new IntakeSystem();
+		brakeSystem = new Brake();
 		teleopDrive = new RawJoystickDrive();
 		liftControl = new PowerWinch();
 		autonomousCommand = new AutoDrive(80, 0.25);
@@ -71,6 +77,8 @@ public class Robot extends IterativeRobot
 		//autonomousCommand = new DriveExpelAuto();
 		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
 		
+//		brakeSystem.setServo(40);
+		
 		if(chooserEnabled)
 		{
 			side.addDefault("Right", "right");
@@ -79,13 +87,10 @@ public class Robot extends IterativeRobot
 			chooser.addDefault("Drive", new AutoDrive(80, 0.25));
 			chooser.addObject("Drive Expel", new DriveExpelAuto());
 			chooser.addObject("Do nothing", new DoNothingAuton());
-			chooser.addObject("Center switch", new MediumSwitch(RobotMap.SIDE.left));
 			
 			SmartDashboard.putData("Auto mode", chooser);
 			SmartDashboard.putData("Side selector", side); 
 		} 
-		
-		CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	/**
@@ -94,13 +99,14 @@ public class Robot extends IterativeRobot
 	@Override
 	public void disabledInit() 
 	{
+		
 	}
 
 	@Override
 	public void disabledPeriodic() 
 	{
+//		System.out.println(autonPot.getAverageVoltage());
 		Scheduler.getInstance().run();
-//		System.out.println("Auto s: " + autonPot.getAverageVoltage());
 	}
 
 	/**
@@ -117,6 +123,9 @@ public class Robot extends IterativeRobot
 	@Override
 	public void autonomousInit() 
 	{
+		driveSystem.setSafety(false);
+		lift.zeroLiftEncoder();
+		
 		String gameMessage = DriverStation.getInstance().getGameSpecificMessage();
 		char[] field = gameMessage.toCharArray();
 		
@@ -128,23 +137,31 @@ public class Robot extends IterativeRobot
 				autonomousCommand = new AutoDrive(75, 0.25);
 			else if(side.getSelected().equals("left") && field[0] == 'R')
 				autonomousCommand = new AutoDrive(75, 0.25);
-			if(field[0] == 'R' && autonomousCommand.equals(new MediumSwitch(RobotMap.SIDE.left)))
-				autonomousCommand = new MediumSwitch(RobotMap.SIDE.left);
-			else if(field[0] == 'L'&& autonomousCommand.equals(new MediumSwitch(RobotMap.SIDE.left)))
-				autonomousCommand = new MediumSwitch(RobotMap.SIDE.right); 
+			if(field[0] == 'R')
+				autonomousCommand = new MediumSwitch('R');
+			else if(field[0] == 'L')
+				autonomousCommand = new MediumSwitch('L'); 
 		}
 		
-		if(autonPot.getAverageVoltage() <= 2.2)
-			autonomousCommand = new AutoDrive(75, 0.25);
+		if(autonPot.getAverageVoltage() <= 0.6)
+			autonomousCommand = new AutoDrive(100, 0.25);
 		else
 		{
-			if(field[0] == 'R')
-				autonomousCommand = new MediumSwitch(RobotMap.SIDE.left);
-			else if(field[0] == 'L')
-				autonomousCommand = new MediumSwitch(RobotMap.SIDE.right);
+			autonomousCommand = new MediumSwitch(field[0]);
 		}
 		
+		testMode = false;
+		
+		if(testMode)
+		{
+			if(field[1] == 'L')
+				autonomousCommand = new ShortScale(field[1]);
+			else
+				autonomousCommand = new AutoDrive(75, 0.25);
+				//autonomousCommand = new LongScale(field[0]);
+		}
 		// schedule the autonomous command (example)
+		brakeSystem.setServo(70);
 		if (autonomousCommand != null)
 			autonomousCommand.start(); 
 	}
@@ -168,9 +185,11 @@ public class Robot extends IterativeRobot
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		
+		driveSystem.setSafety(true);
 		
  		teleopDrive.start();
 		liftControl.start();
+		brakeSystem.setServo(70);
 	}
 
 	/**
@@ -180,7 +199,8 @@ public class Robot extends IterativeRobot
 	public void teleopPeriodic() 
 	{
 		Scheduler.getInstance().run();
-		driveSystem.printOutput(1);
+//		driveSystem.printOutput(1);
+//		System.out.println(driveSystem.getGyroAngle());
 //		lift.printOutput(1);
 	}
 

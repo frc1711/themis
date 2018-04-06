@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1711.robot.subsystems;
+ package org.usfirst.frc.team1711.robot.subsystems;
 
 import org.usfirst.frc.team1711.robot.Robot;
 import org.usfirst.frc.team1711.robot.RobotMap;
@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.MotorSafety;
 import edu.wpi.first.wpilibj.MotorSafetyHelper;
@@ -47,7 +48,7 @@ public class DriveSystem extends Subsystem
     	rightSideDrive = new SpeedControllerGroup(frontRightDrive, rearRightDrive);
     	robotDrive = new DifferentialDrive(leftSideDrive, rightSideDrive);
     	
- //   	gyro = new AHRS(SerialPort.Port.kUSB);
+    	gyro = new AHRS(SerialPort.Port.kUSB);
     }
     
     public void stopRobot()
@@ -67,11 +68,16 @@ public class DriveSystem extends Subsystem
     {
     	//need to know pos/neg right/left
     	if(angle > 0)
-    		turnRight(speed);
-    	else if(angle < 0)
     		turnLeft(speed);
+    	else if(angle < 0)
+    		turnRight(speed);
     	else
     		stopRobot();
+    }
+    
+    public void setSafety(boolean safe)
+    {
+    	robotDrive.setSafetyEnabled(safe);
     }
     
     public void turnRight(double speed)

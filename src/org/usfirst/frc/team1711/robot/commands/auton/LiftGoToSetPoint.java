@@ -21,18 +21,20 @@ public class LiftGoToSetPoint extends Command
     protected void initialize() 
     {
     	Robot.lift.runLift(0);
-    	Robot.lift.zeroLiftEncoder();
+//    	Robot.lift.zeroLiftEncoder();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	Robot.lift.setPositionMode(setPoint);
+    	Robot.lift.runLift(-0.7);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() 
     {
+    	if(Robot.lift.getLiftEncoder() >= setPoint)
+    		return true;
         return false;
     }
 

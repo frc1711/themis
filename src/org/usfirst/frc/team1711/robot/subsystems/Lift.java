@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -29,11 +30,9 @@ public class Lift extends Subsystem
     	liftTalon = new TalonSRX(RobotMap.liftMotor);
 //    	otherLiftTalon = new TalonSRX(RobotMap.otherLiftMotor);
     	liftTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-    	
-    	brakeTalon = new TalonSRX(RobotMap.brakeMotor);
+
     	topLimitSwitch = new DigitalInput(RobotMap.topLiftSwitch);
     	bottomLimitSwitch = new DigitalInput(RobotMap.bottomLiftSwitch);
-    	brakeSwitch = new DigitalInput(RobotMap.brakeSwitch);
     }
     
     public void runLift(double speed)
@@ -52,16 +51,6 @@ public class Lift extends Subsystem
     public int getLiftPosition()
     {
     	return liftTalon.getSelectedSensorPosition(0);
-    }
-    
-    public void brake()
-    {
-    	brakeTalon.set(ControlMode.PercentOutput, 0.5);
-    }
-    
-    public void stopBrake()
-    {
-    	brakeTalon.set(ControlMode.PercentOutput, 0);
     }
     
     public boolean getTopLimitSwitch()

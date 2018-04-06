@@ -30,7 +30,7 @@ public class RobotMap
 	public static int autoSwitch = 0;
 	public static int topLiftSwitch = 4;
 	public static int bottomLiftSwitch = 1;
-	public static int brakeSwitch = 2;
+	public static int brake = 0;
 	
 	public static int driveStick = 0;
 	public static int auxStick = 1;
@@ -39,6 +39,8 @@ public class RobotMap
 	
 	//constants
 	public static final double XBOX_DEADZONE = 0.1;
+	public static final double LIFT_MAX = 47000;
+	public static final double SWITCH_LIFT = 16000;
 	
 	//enums
 	public enum SIDE { right, left };

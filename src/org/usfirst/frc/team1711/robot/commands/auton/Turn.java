@@ -29,13 +29,17 @@ public class Turn extends Command {
     protected void execute() 
     {
     	robotAngle = Robot.driveSystem.getGyroAngle();
-    	Robot.driveSystem.turn(desiredTurnAngle, 0.3);
+    	Robot.driveSystem.turn(desiredTurnAngle, 0.35);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() 
     {
-    	if(!(desiredTurnAngle > 0 && robotAngle < desiredTurnAngle) || !(desiredTurnAngle < 0 && robotAngle > desiredTurnAngle))
+  /*  	if(!(desiredTurnAngle > 0 && robotAngle < desiredTurnAngle) || !(desiredTurnAngle < 0 && robotAngle > desiredTurnAngle))
+    		return true; */
+    	if(Robot.driveSystem.getGyroAngle() >= desiredTurnAngle && desiredTurnAngle > 0)
+    		return true;
+    	else if(Robot.driveSystem.getGyroAngle() <= desiredTurnAngle && desiredTurnAngle < 0)
     		return true;
     	else
     		return false;
@@ -45,6 +49,7 @@ public class Turn extends Command {
     protected void end() 
     {
     	Robot.driveSystem.stopRobot();
+    	Robot.driveSystem.zeroEncoders();
     }
 
     // Called when another command which requires one or more of the same
@@ -52,5 +57,6 @@ public class Turn extends Command {
     protected void interrupted() 
     {
     	Robot.driveSystem.stopRobot();
+    	Robot.driveSystem.zeroEncoders();
     }
 }
