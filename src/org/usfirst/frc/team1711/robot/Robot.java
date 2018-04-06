@@ -61,7 +61,7 @@ public class Robot extends IterativeRobot
 		brakeSystem = new Brake();
 		teleopDrive = new RawJoystickDrive();
 		liftControl = new PowerWinch();
-		autonomousCommand = new AutoDrive(80, 0.25);
+		autonomousCommand = new AutoDrive(80, 0.25, 4);
 		chooserEnabled = false;
 //		autoSwitch = new DigitalInput(RobotMap.autoSwitch);
 		autonPot = new AnalogInput(RobotMap.autonPot);
@@ -110,7 +110,7 @@ public class Robot extends IterativeRobot
 			char[] field = gameMessage.toCharArray();
 			
 			if(autonPot.getAverageVoltage() <= 0.6)
-				autonomousCommand = new AutoDrive(100, 0.25);
+				autonomousCommand = new AutoDrive(100, 0.25, 6);
 			else
 			{
 				autonomousCommand = new MediumSwitch(field[0]);
@@ -125,7 +125,7 @@ public class Robot extends IterativeRobot
 			}
 		}
 		else
-			autonomousCommand = new AutoDrive(75, 0.25);
+			autonomousCommand = new AutoDrive(75, 0.25, 4);
 		// schedule the autonomous command (example)
 		brakeSystem.setServo(70);
 		if (autonomousCommand != null)
