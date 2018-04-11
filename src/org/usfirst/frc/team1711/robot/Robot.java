@@ -105,6 +105,8 @@ public class Robot extends IterativeRobot
 		
 		String gameMessage = DriverStation.getInstance().getGameSpecificMessage();
 		
+		//TEST NEW AUTO DRIVE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		
 		if(!gameMessage.equals(""))
 		{
 			char[] field = gameMessage.toCharArray();
