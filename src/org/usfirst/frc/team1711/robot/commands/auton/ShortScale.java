@@ -17,7 +17,7 @@ public class ShortScale extends CommandGroup {
     public ShortScale(char side) {
     	this.side = side; 
     	
-    	addSequential(new AutoDrive(240, .5));
+    	addSequential(new AutoDrive(240, .5, 6));
     	addSequential(new LiftGoToSetPoint(5000));
  //   	addSequential(new Wait(0.05));
 //    	if(side == 'L')
@@ -27,13 +27,13 @@ public class ShortScale extends CommandGroup {
  //   	addSequential(new Wait(0.1));
  //   	addSequential(new AutoDrive(2, .25));
     	addSequential(new LiftGoToSetPoint(45000));
-    	addSequential(new AutoDrive(6, .25));
+    	addSequential(new AutoDrive(6, .25, 1));
     	addSequential(new LiftGoToSetPoint(46000));
 //    	addSequential(new LiftGoToSetPoint(46000));
 //    	addSequential(new Wait(0.05));
     	addParallel(new TimedLift(3, 0.5));
     	addSequential(new TimedExpel(2));
  //   	addSequential(new TimedExpel(1)); 
-    	addSequential(new AutoDrive(-10, .25));
+    	addSequential(new AutoDrive(-10, .25, 2));
     }
 }

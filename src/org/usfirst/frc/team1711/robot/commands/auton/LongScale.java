@@ -21,13 +21,13 @@ public class LongScale extends CommandGroup
     {
     	this.side = side;
     	
-    	addSequential(new AutoDrive(157, 0.5));
+    	addSequential(new AutoDrive(157, 0.5, 6));
     	addParallel(new LiftGoToSetPoint(5000));
     	addSequential(new Turn(65));
     	addSequential(new Wait(0.05));
-    	addSequential(new AutoDrive(160, 0.35));
+    	addSequential(new AutoDrive(160, 0.35, 6));
     	addSequential(new Turn(-70));
-    	addSequential(new AutoDrive(35, 0.25));
+    	addSequential(new AutoDrive(35, 0.25, 2));
     	addSequential(new LiftGoToSetPoint(45000));
     	addSequential(new TimedExpel(1)); 
     }

@@ -21,12 +21,12 @@ public class LongSwitch extends CommandGroup
     {
     	this.side = side;
     	
-    	addSequential(new AutoDrive(140, 0.5));
+    	addSequential(new AutoDrive(140, 0.5, 6));
     	addSequential(new TimedLift(2, -0.55));
     	addSequential(new Turn(70));
-    	addSequential(new AutoDrive(75, 0.35));
+    	addSequential(new AutoDrive(75, 0.35, 3));
     	addSequential(new Turn(-70));
-    	addSequential(new AutoDrive(5, 0.25));
+    	addSequential(new AutoDrive(5, 0.25, 2));
     	addSequential(new TimedExpel(1));
     }
 }
