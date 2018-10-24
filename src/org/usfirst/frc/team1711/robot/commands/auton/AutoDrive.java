@@ -2,6 +2,7 @@ package org.usfirst.frc.team1711.robot.commands.auton;
 
 import org.usfirst.frc.team1711.robot.Robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -45,6 +46,9 @@ public class AutoDrive extends Command
     		speed *= -1;
     	
     	startTime = System.currentTimeMillis();
+    	
+    	System.out.println("AutoDrive is being initialized");
+    	System.out.println("The current encoder count is: " + Robot.driveSystem.getAverageEncoderValue());
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -80,6 +84,7 @@ public class AutoDrive extends Command
     	Robot.driveSystem.stopRobot();
     	Robot.driveSystem.frontLeftDrive.setInverted(false);
     	Robot.driveSystem.rearLeftDrive.setInverted(false);
+    	System.out.println("AutoDrive is ending");
     }
 
     // Called when another command which requires one or more of the same
@@ -89,5 +94,6 @@ public class AutoDrive extends Command
     	Robot.driveSystem.stopRobot();
     	Robot.driveSystem.frontLeftDrive.setInverted(false);
     	Robot.driveSystem.rearLeftDrive.setInverted(false);
+    	System.out.println("AutoDrive was interrupted");
     }
 }

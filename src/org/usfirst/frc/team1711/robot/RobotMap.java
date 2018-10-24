@@ -41,6 +41,8 @@ public class RobotMap
 	public static final double XBOX_DEADZONE = 0.1;
 	public static final double LIFT_MAX = 47000;
 	public static final double SWITCH_LIFT = 16000;
+	public static final double LIFT_FEEDER = 13000;
+	public static final double BIAS_CORRECTION = 0.95;
 	
 	//enums
 	public enum SIDE { right, left };

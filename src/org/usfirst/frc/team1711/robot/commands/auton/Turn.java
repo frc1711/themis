@@ -23,13 +23,17 @@ public class Turn extends Command {
     {
     	Robot.driveSystem.stopRobot();
     	Robot.driveSystem.zeroGyro();
+    	System.out.println("Turn is being initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
     	robotAngle = Robot.driveSystem.getGyroAngle();
-    	Robot.driveSystem.turn(desiredTurnAngle, 0.35);
+ /*   	if(!Robot.driveSystem.gyro.isConnected())
+    		Robot.driveSystem.stopRobot();
+    	else */
+    		Robot.driveSystem.turn(desiredTurnAngle, 0.35);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -50,6 +54,7 @@ public class Turn extends Command {
     {
     	Robot.driveSystem.stopRobot();
     	Robot.driveSystem.zeroEncoders();
+    	System.out.println("Turn is ending");
     }
 
     // Called when another command which requires one or more of the same
@@ -58,5 +63,6 @@ public class Turn extends Command {
     {
     	Robot.driveSystem.stopRobot();
     	Robot.driveSystem.zeroEncoders();
+    	System.out.println("Turn was interrupted");
     }
 }

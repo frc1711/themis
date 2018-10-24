@@ -5,6 +5,7 @@ import org.usfirst.frc.team1711.robot.Robot;
 import org.usfirst.frc.team1711.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -30,6 +31,13 @@ public class PowerWinch extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
+  //  	System.out.println("Joystick value: " + OI.auxStick.getRawAxis(1));
+  //  	System.out.println("Motor value lift: " + Robot.lift.getLiftPower());
+    	if(Robot.lift.getLiftPower() > 0 && !(OI.auxStick.getRawAxis(1) > 0))
+    		System.out.println("lift out of phase: commanded up");
+    	else if(Robot.lift.getLiftPower() < 0 && !(OI.auxStick.getRawAxis(1) < 0))
+    		System.out.println("lift out of phase: commanded down ");
+    	
     	if(Math.abs(OI.auxStick.getRawAxis(1)) > .1)
     	{
     		/*if(!Robot.lift.getTopLimitSwitch() && OI.auxStick.getRawAxis(1) > 0)
@@ -42,8 +50,6 @@ public class PowerWinch extends Command
     	}
     	else
     		Robot.lift.runLift(0);
-    	
-    	Robot.lift.runLift(OI.auxStick.getRawAxis(1));
     }
 
     // Make this return true when this Command no longer needs to run execute()

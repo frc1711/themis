@@ -1,8 +1,10 @@
 package org.usfirst.frc.team1711.robot;
 
-import org.usfirst.frc.team1711.robot.commands.auton.Turn;
+import org.usfirst.frc.team1711.robot.commands.intake.Drop;
 import org.usfirst.frc.team1711.robot.commands.intake.Expel;
 import org.usfirst.frc.team1711.robot.commands.intake.Intake;
+import org.usfirst.frc.team1711.robot.commands.lift.FeederLift;
+import org.usfirst.frc.team1711.robot.commands.lift.HoldLift;
 import org.usfirst.frc.team1711.robot.commands.lift.SetBrake;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -18,22 +20,25 @@ public class OI
 	public static Joystick driveStick = new Joystick(RobotMap.driveStick);
 	public static Joystick auxStick = new Joystick(RobotMap.auxStick);
 	
-	JoystickButton orthoButton = new JoystickButton(driveStick, 1);
-	JoystickButton winchBrakeButton = new JoystickButton(auxStick, 2);
-	JoystickButton turn = new JoystickButton(driveStick, 3);
 	JoystickButton unBrake = new JoystickButton(auxStick, 4);
-	
+	JoystickButton winchBrakeButton = new JoystickButton(auxStick, 2);
 	JoystickButton intakeButton = new JoystickButton(auxStick, 5);
 	JoystickButton expelButton = new JoystickButton(auxStick, 6);
-	
+	JoystickButton holdButton = new JoystickButton(auxStick, 3);
+	JoystickButton dropButton = new JoystickButton(auxStick, 1);
+	JoystickButton feederButton = new JoystickButton(auxStick, 8);
 	
 	public OI()
 	{
 		winchBrakeButton.whenPressed(new SetBrake(170));
 		unBrake.whenPressed(new SetBrake(60));
 		
-		turn.whenPressed(new Turn(30));
 		intakeButton.whileHeld(new Intake());
 		expelButton.whileHeld(new Expel());
+		
+		dropButton.whileHeld(new Drop());
+		
+		holdButton.whileHeld(new HoldLift());
+		feederButton.whileHeld(new FeederLift());
 	}
 }

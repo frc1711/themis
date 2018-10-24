@@ -21,6 +21,7 @@ public class LiftGoToSetPoint extends Command
     protected void initialize() 
     {
     	Robot.lift.runLift(0);
+    	System.out.println("LiftGoToSetPoint is being initialized");
 //    	Robot.lift.zeroLiftEncoder();
     }
 
@@ -42,6 +43,7 @@ public class LiftGoToSetPoint extends Command
     protected void end() 
     {
     	Robot.lift.runLift(0);
+    	System.out.println("LiftGoToSetPoint is ending");
     }
 
     // Called when another command which requires one or more of the same
@@ -49,5 +51,6 @@ public class LiftGoToSetPoint extends Command
     protected void interrupted() 
     {
     	Robot.lift.runLift(0);
+    	System.out.println("LiftGoToSetPoint was interrupted");
     }
 }

@@ -161,6 +161,14 @@ public class DriveSystem extends Subsystem
     	return gyro.isCalibrating();
     }
     
+    public void driveBiasCorrected(double speed) // we have right bias? i think lol
+    {
+    	frontLeftDrive.set(speed * RobotMap.BIAS_CORRECTION);
+    	frontRightDrive.set(speed);
+    	rearLeftDrive.set(speed * RobotMap.BIAS_CORRECTION);
+    	rearRightDrive.set(speed);
+    }
+    
     public void driveStatic(double speed)
     {
     	frontLeftDrive.set(speed);

@@ -28,6 +28,7 @@ public class Lift extends Subsystem
     public Lift()
     {
     	liftTalon = new TalonSRX(RobotMap.liftMotor);
+//    	liftTalon.config_kP(0, 0.1, 0);
 //    	otherLiftTalon = new TalonSRX(RobotMap.otherLiftMotor);
     	liftTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 
@@ -35,17 +36,26 @@ public class Lift extends Subsystem
     	bottomLimitSwitch = new DigitalInput(RobotMap.bottomLiftSwitch);
     }
     
+    public double getLiftPower()
+    {
+    	return liftTalon.getMotorOutputVoltage();
+    }
     public void runLift(double speed)
     {
     	//percent output has a range of -1 to 1
     	liftTalon.set(ControlMode.PercentOutput, speed);
-    	//otherLiftTalon.set(ControlMode.Follower, RobotMap.liftMotor);
+ //   	System.out.println("Lift speed: " + speed);
     }
     
     public void setPositionMode(double setPoint)
     {
     	//the set point is in native rotation units
     	liftTalon.set(ControlMode.Position, setPoint);
+    }
+    
+    public double getCommandedPower()
+    {
+    	return 0;
     }
     
     public int getLiftPosition()

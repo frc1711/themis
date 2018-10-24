@@ -3,7 +3,9 @@ package org.usfirst.frc.team1711.robot;
 
 import org.usfirst.frc.team1711.robot.commands.auton.AutoDrive;
 import org.usfirst.frc.team1711.robot.commands.auton.MediumSwitch;
+import org.usfirst.frc.team1711.robot.commands.auton.OneAndAHalfCubes;
 import org.usfirst.frc.team1711.robot.commands.auton.ShortScale;
+import org.usfirst.frc.team1711.robot.commands.auton.TwoCubes;
 import org.usfirst.frc.team1711.robot.commands.drive.RawJoystickDrive;
 import org.usfirst.frc.team1711.robot.commands.lift.PowerWinch;
 import org.usfirst.frc.team1711.robot.subsystems.Brake;
@@ -11,6 +13,7 @@ import org.usfirst.frc.team1711.robot.subsystems.DriveSystem;
 import org.usfirst.frc.team1711.robot.subsystems.IntakeSystem;
 import org.usfirst.frc.team1711.robot.subsystems.Lift;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -37,11 +40,12 @@ public class Robot extends IterativeRobot
 	public static Brake brakeSystem;
 	public static DigitalInput autoSwitch;
 	public static AnalogInput autonPot;
+	public static UsbCamera camera;
 	public static OI oi;
 	
 	boolean chooserEnabled;
 	boolean testMode = false;
-
+	
 	Command autonomousCommand;
 	Command teleopDrive;
 	Command liftControl;
@@ -61,13 +65,23 @@ public class Robot extends IterativeRobot
 		brakeSystem = new Brake();
 		teleopDrive = new RawJoystickDrive();
 		liftControl = new PowerWinch();
-		autonomousCommand = new AutoDrive(80, 0.25, 4);
+		autonomousCommand = new AutoDrive(2, 1, 4);
 		chooserEnabled = false;
 //		autoSwitch = new DigitalInput(RobotMap.autoSwitch);
 		autonPot = new AnalogInput(RobotMap.autonPot);
+//		camera = new UsbCamera("usb-camera", 1);
 		//autonomousCommand = new DriveExpelAuto();
 		oi = new OI(); //this needs to be last or else we will get BIG ERROR PROBLEM
 		 
+		//let's see if this does it
+//		camera.setExposureManual(50); //these lines are a maybe
+//		camera.setExposureHoldCurrent();
+/*		camera.setFPS(30);
+		camera.setResolution(320, 240); */
+/*		UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture();
+		cam0.setExposureManual(50);
+		cam0.setResolution(320, 240);
+		cam0.setFPS(30); */
 	}
 
 	/**
@@ -82,8 +96,8 @@ public class Robot extends IterativeRobot
 	@Override
 	public void disabledPeriodic() 
 	{
-//		System.out.println(autonPot.getAverageVoltage());
 		Scheduler.getInstance().run();
+	//	System.out.println(autonPot.getAverageVoltage());
 	}
 
 	/**
@@ -111,23 +125,33 @@ public class Robot extends IterativeRobot
 		{
 			char[] field = gameMessage.toCharArray();
 			
-			if(autonPot.getAverageVoltage() <= 0.6)
-				autonomousCommand = new AutoDrive(100, 0.25, 6);
+			if(autonPot.getAverageVoltage() <= 1.51)
+			{
+				autonomousCommand = new AutoDrive(100, .5, 6);
+				System.out.println("Drive forward: potentiometer chose " + autonPot.getAverageVoltage());
+			}
 			else
 			{
 				autonomousCommand = new MediumSwitch(field[0]);
+				System.out.println("Center switch: potentiometer chose " + autonPot.getAverageVoltage());
 			}
 			
 			testMode = false;
 			
 			if(testMode)
 			{
-				if(field[1] == 'L')
+				if(field[1] == 'R')
 					autonomousCommand = new ShortScale(field[1]);
 			}
+			//TAKE ME OUT
+//			autonomousCommand = new ShortScale(field[1]);
+//			autonomousCommand = new MediumSwitch(field[0]);
 		}
 		else
+		{
 			autonomousCommand = new AutoDrive(75, 0.25, 4);
+			System.out.println("Auto data not received in auto init, driving forward");
+		}
 		// schedule the autonomous command (example)
 		brakeSystem.setServo(70);
 		if (autonomousCommand != null)

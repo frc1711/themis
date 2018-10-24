@@ -33,6 +33,12 @@ public class IntakeSystem extends Subsystem
 		leftIntakeTalon.set(ControlMode.PercentOutput, -0.75);
 	}
 	
+	public void drop()
+	{
+		rightIntakeTalon.set(ControlMode.PercentOutput, 0.5);
+		leftIntakeTalon.set(ControlMode.PercentOutput, -0.5);
+	}
+	
 	public void stop()
 	{
 		rightIntakeTalon.set(ControlMode.PercentOutput, 0);

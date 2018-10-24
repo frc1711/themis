@@ -18,8 +18,8 @@ public class MediumSwitch extends CommandGroup {
     	this.side = side;
     	System.out.println(side);
     	
-    	addSequential(new Wait(.1));
-    	addSequential(new AutoDrive(25, 0.5, 3));
+    	addSequential(new Wait(.2));
+    	addSequential(new AutoDrive(20, 0.7, 3));
     	
     	if(side == 'R')		
     		addSequential(new Turn(70));
@@ -27,7 +27,7 @@ public class MediumSwitch extends CommandGroup {
     		addSequential(new Turn(-70));
     	
     	addSequential(new Wait(.1));
-    	addSequential(new AutoDrive(33, 0.5, 2));
+    	addSequential(new AutoDrive(38, 0.7, 2));
     	
     	if(side == 'R')		
     		addSequential(new Turn(-70));
@@ -35,8 +35,8 @@ public class MediumSwitch extends CommandGroup {
     		addSequential(new Turn(70));
     	
     	addSequential(new Wait(0.3));
-    	addParallel(new LiftGoToSetPoint(RobotMap.SWITCH_LIFT));
-    	addSequential(new AutoDrive(37, 0.5, 2));
+    	addParallel(new LiftGoToSetPoint(RobotMap.SWITCH_LIFT + 1000));
+    	addSequential(new AutoDrive(45, 0.6, 3));
     	addSequential(new Wait(0.1));
     	addSequential(new TimedExpel(1)); 
     }

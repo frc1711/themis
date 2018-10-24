@@ -15,8 +15,10 @@ public class TimedExpel extends TimedCommand {
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {
+    protected void initialize() 
+    {
     	Robot.intake.stop();
+    	System.out.println("TimedExpel is being initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -27,11 +29,13 @@ public class TimedExpel extends TimedCommand {
     // Called once after timeout
     protected void end() {
     	Robot.intake.stop();
+    	System.out.println("TimedExpel is ending");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
     	Robot.intake.stop();
+    	System.out.println("TimedExpel was interrupted");
     }
 }
