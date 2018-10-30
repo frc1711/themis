@@ -24,10 +24,9 @@ public class Expel extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	if(Math.abs(OI.throwStick.getRawAxis(5)) > .1)
+    	if(Math.abs(OI.auxStick.getRawAxis(5)) > .1)
     	{
-    		
-    		Robot.intake.expel(OI.throwStick.getRawAxis(5));
+    		Robot.intake.expel(OI.auxStick.getRawAxis(5));
     	}   
     }
 

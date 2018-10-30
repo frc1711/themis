@@ -19,7 +19,6 @@ public class OI
 {
 	public static Joystick driveStick = new Joystick(RobotMap.driveStick);
 	public static Joystick auxStick = new Joystick(RobotMap.auxStick);
-	public static Joystick throwStick = new Joystick(RobotMap.throwStick); 
 	
 	JoystickButton unBrake = new JoystickButton(auxStick, 4);
 	JoystickButton winchBrakeButton = new JoystickButton(auxStick, 2);
