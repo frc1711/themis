@@ -2,7 +2,7 @@ package org.usfirst.frc.team1711.robot.commands.auton;
 
 import org.usfirst.frc.team1711.robot.RobotMap;
 import org.usfirst.frc.team1711.robot.commands.Wait;
-import org.usfirst.frc.team1711.robot.commands.drive.GyroCorrectedDrive;
+//import org.usfirst.frc.team1711.robot.commands.drive.GyroCorrectedDrive;
 import org.usfirst.frc.team1711.robot.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -20,7 +20,7 @@ public class ShortScale extends CommandGroup
     {
     	this.side = side; 
   //  	addSequential(new Turn(-2));
-    	addSequential(new DriveBiasCorrected(220, .5, 7));
+ //   	addSequential(new DriveBiasCorrected(220, .5, 7));
     //	addSequential(new AutoDrive(200, .5, 7));
     	addSequential(new LiftGoToSetPoint(5000));
     	addSequential(new Turn(-60));

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1711.robot.commands.intake;
 
+import org.usfirst.frc.team1711.robot.OI;
 import org.usfirst.frc.team1711.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,7 +24,11 @@ public class Expel extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	Robot.intake.expel();
+    	if(Math.abs(OI.throwStick.getRawAxis(5)) > .1)
+    	{
+    		
+    		Robot.intake.expel(OI.throwStick.getRawAxis(5));
+    	}   
     }
 
     // Make this return true when this Command no longer needs to run execute()

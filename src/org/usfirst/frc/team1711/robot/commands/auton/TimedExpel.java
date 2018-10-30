@@ -23,7 +23,7 @@ public class TimedExpel extends TimedCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intake.expel();
+    	Robot.intake.expel(-.075);
     }
 
     // Called once after timeout

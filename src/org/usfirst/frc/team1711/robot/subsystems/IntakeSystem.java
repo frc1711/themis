@@ -29,10 +29,10 @@ public class IntakeSystem extends Subsystem
 		leftIntakeTalon.set(ControlMode.PercentOutput, 0.75);
 	}
 	
-	public void expel()
+	public void expel(double speed)
 	{	
-		rightIntakeTalon.set(ControlMode.PercentOutput,-OI.throwStick.getRawAxis(5));
-		leftIntakeTalon.set(ControlMode.PercentOutput, -OI.throwStick.getRawAxis(5));
+		rightIntakeTalon.set(ControlMode.PercentOutput, speed);
+		leftIntakeTalon.set(ControlMode.PercentOutput, speed);
 	}
 	
 	public void drop()

@@ -3,9 +3,9 @@ package org.usfirst.frc.team1711.robot;
 
 import org.usfirst.frc.team1711.robot.commands.auton.AutoDrive;
 import org.usfirst.frc.team1711.robot.commands.auton.MediumSwitch;
-import org.usfirst.frc.team1711.robot.commands.auton.OneAndAHalfCubes;
+//import org.usfirst.frc.team1711.robot.commands.auton.OneAndAHalfCubes;
 import org.usfirst.frc.team1711.robot.commands.auton.ShortScale;
-import org.usfirst.frc.team1711.robot.commands.auton.TwoCubes;
+//import org.usfirst.frc.team1711.robot.commands.auton.TwoCubes;
 import org.usfirst.frc.team1711.robot.commands.drive.RawJoystickDrive;
 import org.usfirst.frc.team1711.robot.commands.lift.PowerWinch;
 import org.usfirst.frc.team1711.robot.subsystems.Brake;
