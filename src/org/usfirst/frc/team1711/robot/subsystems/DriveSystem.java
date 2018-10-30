@@ -66,7 +66,7 @@ public class DriveSystem extends Subsystem
     
     public void turn(double angle, double speed)
     {
-    	//need to know pos/neg right/left
+    	//need to know pos/neg right/left 
     	if(angle > 0)
     		turnLeft(speed);
     	else if(angle < 0)
@@ -76,7 +76,7 @@ public class DriveSystem extends Subsystem
     }
     
     public void setSafety(boolean safe)
-    {
+    {	
     	robotDrive.setSafetyEnabled(safe);
     }
     
