@@ -34,6 +34,7 @@ public class RobotMap
 	
 	public static int driveStick = 0;
 	public static int auxStick = 1;
+	public static int throwStick = 1; 
 	
 	public static int autonPot = 1;
 	

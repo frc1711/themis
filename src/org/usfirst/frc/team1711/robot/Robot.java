@@ -121,18 +121,18 @@ public class Robot extends IterativeRobot
 		
 		//TEST NEW AUTO DRIVE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
-		if(!gameMessage.equals(""))
+		if(!gameMessage.equals("")) //if it's not empty
 		{
-			char[] field = gameMessage.toCharArray();
+			char[] field = gameMessage.toCharArray(); //get the field layout. also, it goes xyz. X = scale, Y = switch, Z = enemy scale
 			
-			if(autonPot.getAverageVoltage() <= 1.51)
+			if(autonPot.getAverageVoltage() <= 1.51) //if the voltage is less than or equal to 1.51, do: 
 			{
-				autonomousCommand = new AutoDrive(100, .5, 6);
+				autonomousCommand = new AutoDrive(100, .5, 6); //drive forward
 				System.out.println("Drive forward: potentiometer chose " + autonPot.getAverageVoltage());
 			}
-			else
+			else 
 			{
-				autonomousCommand = new MediumSwitch(field[0]);
+				autonomousCommand = new MediumSwitch(field[0]); //create a new MediumSwitch auton, getting the FIRST element of the field 
 				System.out.println("Center switch: potentiometer chose " + autonPot.getAverageVoltage());
 			}
 			
@@ -147,7 +147,7 @@ public class Robot extends IterativeRobot
 //			autonomousCommand = new ShortScale(field[1]);
 //			autonomousCommand = new MediumSwitch(field[0]);
 		}
-		else
+		else //vroom vroom 
 		{
 			autonomousCommand = new AutoDrive(75, 0.25, 4);
 			System.out.println("Auto data not received in auto init, driving forward");

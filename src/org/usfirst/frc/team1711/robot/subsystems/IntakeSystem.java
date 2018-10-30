@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1711.robot.subsystems;
 
+import org.usfirst.frc.team1711.robot.OI;
+import org.usfirst.frc.team1711.robot.Robot;
 import org.usfirst.frc.team1711.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -28,9 +30,9 @@ public class IntakeSystem extends Subsystem
 	}
 	
 	public void expel()
-	{
-		rightIntakeTalon.set(ControlMode.PercentOutput, 0.75);
-		leftIntakeTalon.set(ControlMode.PercentOutput, -0.75);
+	{	
+		rightIntakeTalon.set(ControlMode.PercentOutput,-OI.throwStick.getRawAxis(5));
+		leftIntakeTalon.set(ControlMode.PercentOutput, -OI.throwStick.getRawAxis(5));
 	}
 	
 	public void drop()
