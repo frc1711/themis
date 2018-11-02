@@ -3,7 +3,8 @@ package org.usfirst.frc.team1711.robot.subsystems;
 import org.usfirst.frc.team1711.robot.OI;
 import org.usfirst.frc.team1711.robot.Robot;
 import org.usfirst.frc.team1711.robot.RobotMap;
-
+import org.usfirst.frc.team1711.robot.commands.lift.PowerWinch;
+import org.usfirst.frc.team1711.robot.commands.intake.Expel;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -51,6 +52,7 @@ public class IntakeSystem extends Subsystem
     {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    }
+    	setDefaultCommand(new Expel());    
+    	}
 }
 

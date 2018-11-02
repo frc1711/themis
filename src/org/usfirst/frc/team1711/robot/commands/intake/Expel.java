@@ -26,8 +26,14 @@ public class Expel extends Command {
     {
     	if(Math.abs(OI.auxStick.getRawAxis(5)) > .1)
     	{
-    		Robot.intake.expel(OI.auxStick.getRawAxis(5));
-    	}   
+    		Robot.intake.expel(OI.auxStick.getRawAxis(5)*OI.auxStick.getRawAxis(5));
+    	} 
+    	else if (Math.abs(OI.auxStick.getRawAxis(5)) == 0) {
+    		Robot.intake.expel(0);
+    	} 
+    	else if (Math.abs(OI.auxStick.getRawAxis(5)) < .1) {
+    		Robot.intake.expel(-(OI.auxStick.getRawAxis(5)*OI.auxStick.getRawAxis(5)));
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
