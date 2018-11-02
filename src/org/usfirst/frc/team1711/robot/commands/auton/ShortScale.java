@@ -23,7 +23,10 @@ public class ShortScale extends CommandGroup
  //   	addSequential(new DriveBiasCorrected(220, .5, 7));
     //	addSequential(new AutoDrive(200, .5, 7));
     	addSequential(new LiftGoToSetPoint(5000));
-    	addSequential(new Turn(-60));
+    	if (side == 'L')
+    		addSequential(new Turn(-60));
+    	else if (side == 'R')
+    		addSequential(new Turn(60));
  //   	addSequential(new Wait(0.1));
  //   	addSequential(new AutoDrive(2, .25));
     	addSequential(new LiftGoToSetPoint(45000));

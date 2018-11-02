@@ -6,6 +6,7 @@ import org.usfirst.frc.team1711.robot.commands.auton.MediumSwitch;
 //import org.usfirst.frc.team1711.robot.commands.auton.OneAndAHalfCubes;
 import org.usfirst.frc.team1711.robot.commands.auton.ShortScale;
 //import org.usfirst.frc.team1711.robot.commands.auton.TwoCubes;
+import org.usfirst.frc.team1711.robot.commands.auton.ShortSwitchScale; 
 import org.usfirst.frc.team1711.robot.commands.drive.RawJoystickDrive;
 import org.usfirst.frc.team1711.robot.commands.lift.PowerWinch;
 import org.usfirst.frc.team1711.robot.subsystems.Brake;
@@ -78,10 +79,10 @@ public class Robot extends IterativeRobot
 //		camera.setExposureHoldCurrent();
 /*		camera.setFPS(30);
 		camera.setResolution(320, 240); */
-/*		UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture();
+		UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture();
 		cam0.setExposureManual(50);
 		cam0.setResolution(320, 240);
-		cam0.setFPS(30); */
+		cam0.setFPS(30); 
 	}
 
 	/**
@@ -125,23 +126,36 @@ public class Robot extends IterativeRobot
 		{
 			char[] field = gameMessage.toCharArray(); //get the field layout. also, it goes xyz. X = scale, Y = switch, Z = enemy scale
 			
-			if(autonPot.getAverageVoltage() <= 1.51) //if the voltage is less than or equal to 1.51, do: 
-			{
-				autonomousCommand = new AutoDrive(100, .5, 6); //drive forward
+			if(autonPot.getAverageVoltage() <= 1.51) {
+				/*autonomousCommand = new AutoDrive(100, .5, 6);3 //drive forward
 				System.out.println("Drive forward: potentiometer chose " + autonPot.getAverageVoltage());
+			*/
+				if (field[0] == 'R' && field[1] == 'L') {
+					autonomousCommand = new ShortScale(field[0]); 
+				} else if (field [0] == 'R' && field[1] == 'R') {
+					autonomousCommand = new ShortSwitchScale(field[0]); 
+				} else if (field [0] == 'L' && field[1] == 'L') {
+					autonomousCommand = new AutoDrive(170, .9, 6); 
+				}
 			}
-			else 
-			{
+			else {
 				autonomousCommand = new MediumSwitch(field[0]); //create a new MediumSwitch auton, getting the FIRST element of the field 
 				System.out.println("Center switch: potentiometer chose " + autonPot.getAverageVoltage());
 			}
 			
 			testMode = false;
 			
-			if(testMode)
-			{
-				if(field[1] == 'R')
-					autonomousCommand = new ShortScale(field[1]);
+			if(testMode){
+				/*if(field[1] == 'R')
+					autonomousCommand = new ShortScale(field[1]); */
+				if (field[0] == 'R' && field[1] == 'L') {
+					autonomousCommand = new ShortScale(field[0]); 
+					//chose the short scale for RLx
+				} else if (field [0] == 'R' && field[1] == 'R') {
+					autonomousCommand = new ShortSwitchScale(field[0]); 
+				} else if (field [0] == 'L' && field[1] == 'L') {
+					autonomousCommand = new AutoDrive(170, .9, 6); 
+				}
 			}
 			//TAKE ME OUT
 //			autonomousCommand = new ShortScale(field[1]);

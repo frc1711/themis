@@ -4,7 +4,7 @@ package org.usfirst.frc.team1711.robot;
 import org.usfirst.frc.team1711.robot.commands.intake.Expel;
 import org.usfirst.frc.team1711.robot.commands.intake.Intake;
 //import org.usfirst.frc.team1711.robot.commands.lift.FeederLift;
-//import org.usfirst.frc.team1711.robot.commands.lift.HoldLift;
+import org.usfirst.frc.team1711.robot.commands.lift.HoldLift;
 import org.usfirst.frc.team1711.robot.commands.lift.SetBrake;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -38,7 +38,7 @@ public class OI
 		
 //		dropButton.whileHeld(new Drop());
 		
-//		holdButton.whileHeld(new HoldLift());
+		holdButton.whileHeld(new HoldLift());
 //		feederButton.whileHeld(new FeederLift());
 	}
 }
