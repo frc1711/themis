@@ -1,11 +1,15 @@
 package org.usfirst.frc.team1711.robot;
 
-import org.usfirst.frc.team1711.robot.commands.BrakeWinch;
-import org.usfirst.frc.team1711.robot.commands.OrthoLockDrive;
+import org.usfirst.frc.team1711.robot.commands.intake.Drop;
+import org.usfirst.frc.team1711.robot.commands.intake.Expel;
+import org.usfirst.frc.team1711.robot.commands.intake.Intake;
+import org.usfirst.frc.team1711.robot.commands.lift.FeederLift;
+import org.usfirst.frc.team1711.robot.commands.lift.HoldLift;
+import org.usfirst.frc.team1711.robot.commands.lift.SetBrake;
 
-import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
+//test
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -13,39 +17,28 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI 
 {
-	//// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	//// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
-
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
-
-	//// TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
-
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
-
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new ExampleCommand());
-
-	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenReleased(new ExampleCommand());
-	JoystickButton orthoButton = new JoystickButton(RobotMap.driveStick, 1);
-	JoystickButton winchBrakeButton = new JoystickButton(RobotMap.auxStick, 2);
+	public static Joystick driveStick = new Joystick(RobotMap.driveStick);
+	public static Joystick auxStick = new Joystick(RobotMap.auxStick);
+	
+	JoystickButton unBrake = new JoystickButton(auxStick, 4);
+	JoystickButton winchBrakeButton = new JoystickButton(auxStick, 2);
+	JoystickButton intakeButton = new JoystickButton(auxStick, 5);
+	JoystickButton expelButton = new JoystickButton(auxStick, 6);
+	JoystickButton holdButton = new JoystickButton(auxStick, 3);
+	JoystickButton dropButton = new JoystickButton(auxStick, 1);
+	JoystickButton feederButton = new JoystickButton(auxStick, 8);
 	
 	public OI()
 	{
-		winchBrakeButton.whenPressed(new BrakeWinch());
-//		orthoButton.whileHeld(new OrthoLockDrive());
+		winchBrakeButton.whenPressed(new SetBrake(170));
+		unBrake.whenPressed(new SetBrake(60));
+		
+		intakeButton.whileHeld(new Intake());
+		expelButton.whileHeld(new Expel());
+		
+		dropButton.whileHeld(new Drop());
+		
+		holdButton.whileHeld(new HoldLift());
+		feederButton.whileHeld(new FeederLift());
 	}
 }
